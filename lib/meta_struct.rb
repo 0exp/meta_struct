@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# @api public
-# @since 0.1.0
+require 'securerandom'
+
 module MetaStruct
-  require 'meta_struct/version'
+  require_relative 'meta_struct/version'
+  require_relative 'meta_struct/graph'
 end
