@@ -2,9 +2,9 @@
 
 ## MetaStruct::Graph
 
-*MetaStruct::Graph* - directed acyclic graph. Realized as a representational data structure (without mutation interfaces).
+`MetaStruct::Graph` - directed acyclic graph. Realized as a representational data structure (without mutation interfaces).
 
-### Creation
+### Graph Creation
 
 - create `MetaStruct::Graph::Node`s:
 
