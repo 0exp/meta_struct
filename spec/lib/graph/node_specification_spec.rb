@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 RSpec.describe MetaStruct::Graph::Node do
-  before do # populate a rspec-controllable uuid generator to the global state
+  before do # register a rspec-controllable uuid generator in the global di registry
     ::MetaStruct::Graph::Node::Factory::DIContainer.register(:uuid_generator) do
       uuid_collection = %w[test1 test2 test3].cycle
       -> { uuid_collection.next }
     end
   end
 
-  after do # return the original uuid generator to the global state
+  after do # return the original uuid generator to the global di registry
     ::MetaStruct::Graph::Node::Factory::DIContainer.register(:uuid_generator) do
       ::MetaStruct::Graph::Node::UUIDGenerator
     end
