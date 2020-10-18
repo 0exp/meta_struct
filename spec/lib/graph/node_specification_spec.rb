@@ -3,7 +3,7 @@
 RSpec.describe MetaStruct::Graph::Node do
   before do # register a rspec-controllable uuid generator in the global di registry
     ::MetaStruct::Graph::Node::Factory::DIContainer.register(:uuid_generator) do
-      uuid_collection = %w[test1 test2 test3].cycle
+      uuid_collection = %w[test1 test2 test3 test4 test5].cycle
       -> { uuid_collection.next }
     end
   end
@@ -106,7 +106,7 @@ RSpec.describe MetaStruct::Graph::Node do
   end
 
   describe 'common instance creation and state access' do
-    specify 'commonly created node (creation without attribute substitution)' do
+    specify 'commonly created node (default state)' do
       node = MetaStruct::Graph::Node.create
 
       aggregate_failures 'default state' do
@@ -119,7 +119,7 @@ RSpec.describe MetaStruct::Graph::Node do
       end
     end
 
-    specify 'commonly created node (with attribute population)' do
+    specify 'commonly created node (with custom attributes)' do
       aggregate_failures 'manually populated state' do
         node = MetaStruct::Graph::Node.create(
           uuid: 'my_own_uuid',

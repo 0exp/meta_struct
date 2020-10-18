@@ -6,12 +6,21 @@ module MetaStruct::Graph::Node::Factory
   require_relative 'factory/di_container'
 
   # @return [Array]
+  #
+  # @api private
+  # @since 0.1.0
   NO_LABELS = [].freeze
 
   # @return [Hash]
+  #
+  # @api private
+  # @since 0.1.0
   NO_PROPERTIES = {}.freeze
 
   # @return [nil]
+  #
+  # @api private
+  # @since 0.1.0
   AUTO_GENERATED_UUID = nil
 
   class << self
