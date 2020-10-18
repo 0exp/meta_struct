@@ -12,8 +12,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    armitage-rubocop (0.92.0)
-      rubocop (= 0.92.0)
+    armitage-rubocop (0.93.1)
+      rubocop (= 0.93.1)
       rubocop-performance (= 1.8.1)
       rubocop-rails (= 2.8.1)
       rubocop-rake (= 0.5.1)
@@ -51,13 +51,13 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.3)
-    rubocop (0.92.0)
+    rubocop (0.93.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
       rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.7)
+      regexp_parser (>= 1.8)
       rexml
-      rubocop-ast (>= 0.5.0)
+      rubocop-ast (>= 0.6.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
     rubocop-ast (0.8.0)
@@ -88,13 +88,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  armitage-rubocop (~> 0.87)
+  armitage-rubocop (~> 0.93.1)
   bundler (~> 2.1)
   meta_struct!
   pry (~> 0.13)
   rake (~> 13.0)
   rspec (~> 3.9)
-  simplecov (~> 0.18)
+  simplecov (~> 0.19)
 
 BUNDLED WITH
    2.1.4

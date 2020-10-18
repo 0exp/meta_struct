@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MetaStruct::Graph::Edge
+  require_relative 'edge/factory'
+
   # @return [Array<String>]
   attr_reader :labels
 
