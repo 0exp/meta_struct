@@ -33,7 +33,31 @@ module MetaStruct::Graph::Node::Factory
     # @param labels [Array<String,Symbol>]
     # @param properties [Hash<String|Symbol,Any>]
     # @return [void]
-    def validate_attributes(uuid, labels, properties); end
+    def validate_attributes(uuid, labels, properties)
+      unless labels.is_a?(::Array)
+        raise(MetaStruct::Graph::InvalidNodeLabelsError, <<~ERROR_MESSAGE)
+          Node labels collection should be a type of Array of strings.
+        ERROR_MESSAGE
+      end
+
+      unless labels.all? { |label| label.is_a?(::String) || label.is_a?(::Symbol) }
+        raise(MetaStruct::Graph::InvalidNodeLabelsError, <<~ERROR_MESSAGE)
+          Each node's lablel should be a type of string or symbol.
+        ERROR_MESSAGE
+      end
+
+      unless properties.is_a?(::Hash)
+        raise(MetaStruct::Graph::InvalidNodePropertiesError, <<~ERROR_MESSAGE)
+          Node properties collection should be a type of Hash.
+        ERROR_MESSAGE
+      end
+
+      unless properties.keys.all? { |key| key.is_a?(::String) || key.is_a?(::Symbol) }
+        raise(MetaStruct::Graph::InvalidNodePropertiesError, <<~ERROR_MESSAGE)
+          Node property keys should be a type of string or symbol.
+        ERROR_MESSAGE
+      end
+    end
 
     # @param uuid [String, nil]
     # @return [String]

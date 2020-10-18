@@ -9,7 +9,7 @@ class MetaStruct::Graph::Node
     # @option properties [Hash<String|Symbol,Any>]
     # @return [MetaStruct::Graph::Node]
     # rubocop:disable Layout/LineLength
-    def craete(uuid: Factory.generate_uuid, labels: Factory::NO_LABELS, properties: Factory::NO_PROPERTIES)
+    def create(uuid: Factory.generate_uuid, labels: Factory::NO_LABLES, properties: Factory::NO_PROPERTIES)
       Factory.create(uuid: uuid, labels: labels, properties: properties)
     end
     # rubocop:enable Layout/LineLength
