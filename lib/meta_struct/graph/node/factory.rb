@@ -1,18 +1,34 @@
 # frozen_string_literal: true
 
+# @api private
+# @since 0.1.0
 module MetaStruct::Graph::Node::Factory
+  require_relative 'factory/di_container'
+
   # @return [Array]
-  NO_LABLES = [].freeze
+  NO_LABELS = [].freeze
 
   # @return [Hash]
   NO_PROPERTIES = {}.freeze
 
+  # @return [nil]
+  AUTO_GENERATED_UUID = nil
+
   class << self
+    # @since 0.1.0
+    include SmartCore::Injection(DIContainer)
+
+    # @since 0.1.0
+    import({ uuid_generator: 'uuid_generator' }, bind: :dynamic, access: :private)
+
     # @option uuid [String, nil]
     # @option labels [Array<String,Symbol>]
     # @option properties [Hash<String|Symbol,Any>]
     # @return [MetaStruct::Graph::Node]
-    def create(uuid: generate_uuid, labels: NO_LABLES, properties: NO_PROPERTIES)
+    #
+    # @api private
+    # @since 0.1.0
+    def create(uuid: AUTO_GENERATED_UUID, labels: NO_LABELS, properties: NO_PROPERTIES)
       validate_attributes(uuid, labels, properties)
 
       uuid = prepare_uuid(uuid)
@@ -22,17 +38,15 @@ module MetaStruct::Graph::Node::Factory
       create_node(uuid, labels, properties)
     end
 
-    # @return [String]
-    def generate_uuid
-      ::SecureRandom.uuid
-    end
-
     private
 
     # @param uuid [String, nil]
     # @param labels [Array<String,Symbol>]
     # @param properties [Hash<String|Symbol,Any>]
     # @return [void]
+    #
+    # @api private
+    # @since 0.1.0
     def validate_attributes(uuid, labels, properties)
       unless labels.is_a?(::Array)
         raise(MetaStruct::Graph::InvalidNodeLabelsError, <<~ERROR_MESSAGE)
@@ -42,7 +56,7 @@ module MetaStruct::Graph::Node::Factory
 
       unless labels.all? { |label| label.is_a?(::String) || label.is_a?(::Symbol) }
         raise(MetaStruct::Graph::InvalidNodeLabelsError, <<~ERROR_MESSAGE)
-          Each node's lablel should be a type of string or symbol.
+          Each node's label should be a type of string or symbol.
         ERROR_MESSAGE
       end
 
@@ -61,20 +75,40 @@ module MetaStruct::Graph::Node::Factory
 
     # @param uuid [String, nil]
     # @return [String]
-    def prepare_uuid(uuid); end
+    #
+    # @api private
+    # @since 0.1.0
+    def prepare_uuid(uuid)
+      uuid == nil ? uuid_generator.call : uuid
+    end
 
     # @param labels [Array<String,Symbol>]
     # @return [Array<String>]
-    def prepare_labels(labels); end
+    #
+    # @api private
+    # @since 0.1.0
+    def prepare_labels(labels)
+      labels.map(&:to_s).tap(&:freeze)
+    end
 
     # @param properties [Hash<String|Symbol,Any>]
     # @return [Hash<String,Any>]
-    def prepare_properties(properties); end
+    #
+    # @api private
+    # @since 0.1.0
+    def prepare_properties(properties)
+      properties.transform_keys(&:to_s).tap(&:freeze)
+    end
 
     # @param uuid [String]
     # @param labels [Array<String>]
     # @param properties [Hash<String,Any>]
     # @return [MetaStruct::Graph::Node]
-    def create_node(uuid, labels, properties); end
+    #
+    # @api private
+    # @since 0.1.0
+    def create_node(uuid, labels, properties)
+      MetaStruct::Graph::Node.new(uuid: uuid, labels: labels, properties: properties)
+    end
   end
 end

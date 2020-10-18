@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class MetaStruct::Graph::Node
+  require_relative 'node/uuid_generator'
   require_relative 'node/factory'
 
   class << self
@@ -9,7 +10,7 @@ class MetaStruct::Graph::Node
     # @option properties [Hash<String|Symbol,Any>]
     # @return [MetaStruct::Graph::Node]
     # rubocop:disable Layout/LineLength
-    def create(uuid: Factory.generate_uuid, labels: Factory::NO_LABLES, properties: Factory::NO_PROPERTIES)
+    def create(uuid: Factory::AUTO_GENERATED_UUID, labels: Factory::NO_LABELS, properties: Factory::NO_PROPERTIES)
       Factory.create(uuid: uuid, labels: labels, properties: properties)
     end
     # rubocop:enable Layout/LineLength
@@ -30,7 +31,7 @@ class MetaStruct::Graph::Node
   # @return [void]
   def initialize(uuid:, labels:, properties:)
     @uuid = uuid
-    @lables = lables
+    @labels = labels
     @properties = properties
   end
 end
