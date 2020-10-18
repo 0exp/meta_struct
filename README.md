@@ -6,7 +6,7 @@
 
 ### Graph Creation
 
-- create `MetaStruct::Graph::Node`:
+- create edge `MetaStruct::Graph::Node`:
 
 ```ruby
 MetaStruct::Graph::Node.create(
@@ -16,7 +16,7 @@ MetaStruct::Graph::Node.create(
 )
 ```
 
-- create `MetaStruct::Graph::Edge`:
+- create node `MetaStruct::Graph::Edge`:
 
 ```ruby
 MetaStruct::Graph::Edge.create(
@@ -28,7 +28,7 @@ MetaStruct::Graph::Edge.create(
 )
 ```
 
-- build graph (`MetaStruct::Graph`):
+- build graph `MetaStruct::Graph`:
 
 ```ruby
 MetaStruct::Graph.create(
