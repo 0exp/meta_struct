@@ -28,7 +28,7 @@ MetaStruct::Graph::Edge.create(
 )
 ```
 
-- build graph via appropriated factory method:
+- build graph (`MetaStruct::Graph`):
 
 ```ruby
 MetaStruct::Graph.create(
