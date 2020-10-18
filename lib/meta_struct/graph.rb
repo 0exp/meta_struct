@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# @api public
+# @since 0.1.0
 class MetaStruct::Graph
   require_relative 'graph/errors'
   require_relative 'graph/node'
@@ -11,14 +13,23 @@ class MetaStruct::Graph
     # @option nodes [Array<MetaStruct::Graph::Node>]
     # @option edges [Array<MetaStruct::Graph::Edge>]
     # @return [MetaStruct::Graph]
+    #
+    # @api public
+    # @since 0.1.0
     def create(nodes: Factpry::NO_NODES, edges: Factory::NO_EDGES); end
   end
 
   # @return [MetaStruct::Graph::Point]
+  #
+  # @api public
+  # @since 0.1.0
   attr_reader :root
 
   # @param root [MetaStruct::Graph::Point]
   # @return [void]
+  #
+  # @api public
+  # @since 0.1.0
   def initialize(root)
     @root = root
   end
