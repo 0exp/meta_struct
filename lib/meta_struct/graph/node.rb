@@ -3,6 +3,18 @@
 class MetaStruct::Graph::Node
   require_relative 'node/factory'
 
+  class << self
+    # @option uuid [String, nil]
+    # @option labels [Array<String,Symbol>]
+    # @option properties [Hash<String|Symbol,Any>]
+    # @return [MetaStruct::Graph::Node]
+    # rubocop:disable Layout/LineLength
+    def craete(uuid: Factory.generate_uuid, labels: Factory::NO_LABELS, properties: Factory::NO_PROPERTIES)
+      Factory.create(uuid: uuid, labels: labels, properties: properties)
+    end
+    # rubocop:enable Layout/LineLength
+  end
+
   # @return [Hash<String,Any>]
   attr_reader :properties
 
@@ -16,7 +28,7 @@ class MetaStruct::Graph::Node
   # @option labels [Array<String>]
   # @option properties [Hash<String,Any>]
   # @return [void]
-  def initialize(uuid:, labels:, properties:,)
+  def initialize(uuid:, labels:, properties:)
     @uuid = uuid
     @lables = lables
     @properties = properties
