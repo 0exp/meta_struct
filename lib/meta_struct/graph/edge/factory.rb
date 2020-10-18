@@ -17,6 +17,7 @@ module MetaStruct::Graph::Edge::Factory
     # @option properties [Hash<String|Symbol,Any>]
     # @option weight [Integer]
     # @return [MetaStruct::Graph::Edge]
+    # rubocop:disable Layout/LineLength
     def create(left_node:, right_node:, labels: NO_WEIGHT, properties: NO_PROPERTIES, weight: NO_WEIGHT)
       validate_attributes(left_node, right_node, labels, properties, weight)
 
@@ -25,6 +26,7 @@ module MetaStruct::Graph::Edge::Factory
 
       create_edge(left_node, right_node, labels, properties, weight)
     end
+    # rubocop:enable Layout/LineLength
 
     private
 

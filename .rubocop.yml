@@ -13,3 +13,7 @@ AllCops:
     - Rakefile
     - meta_struct.gemspec
     - bin/console
+
+# NOTE: disabled for better code clarity in specs
+RSpec/DescribedClass:
+  Enabled: false
