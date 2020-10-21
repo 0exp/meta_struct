@@ -17,7 +17,9 @@ class MetaStruct::Graph
     #
     # @api public
     # @since 0.1.0
-    def create(nodes: Factpry::NO_NODES, edges: Factory::NO_EDGES); end
+    def create(nodes: Factpry::NO_NODES, edges: Factory::NO_EDGES)
+      Factory.create(node: nodes, edges: edges)
+    end
   end
 
   # @return [MetaStruct::Graph::Point]
