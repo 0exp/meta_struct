@@ -8,6 +8,7 @@ class MetaStruct::Graph
   require_relative 'graph/edge'
   require_relative 'graph/point'
   require_relative 'graph/factory'
+  require_relative 'graph/algorithms'
 
   class << self
     # @option nodes [Array<MetaStruct::Graph::Node>]
@@ -32,5 +33,23 @@ class MetaStruct::Graph
   # @since 0.1.0
   def initialize(root)
     @root = root
+  end
+
+  # @param node_uuid [String]
+  # @return [MetaStruct::Graph::Point]
+  #
+  # @api public
+  # @since 0.1.0
+  def find_node(node_uuid)
+    Algorithms::FindNode.call(self, node_uuid)
+  end
+
+  # @param iterator [Block]
+  # @return [void]
+  #
+  # @api public
+  # @since 0.1.0
+  def traverse(&iterator)
+    Algorithms::GraphTraversal.traverse(self, &iterator)
   end
 end
