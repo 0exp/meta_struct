@@ -44,6 +44,14 @@ class MetaStruct::Graph
     Algorithms::FindNode.call(self, node_uuid)
   end
 
+  # @return [Array<MetaStruct::Graph::Point>]
+  #
+  # @api public
+  # @since 0.1.0
+  def find_bound_nodes
+    Algorithms::FindBoundNodes.call(self)
+  end
+
   # @param iterator [Block]
   # @return [void]
   #
