@@ -37,14 +37,14 @@ module MetaStruct::Graph::Node::Factory
     #
     # @api private
     # @since 0.1.0
-    def create(uuid: AUTO_GENERATED_UUID, labels: NO_LABELS, properties: NO_PROPERTIES)
-      validate_attributes(uuid, labels, properties)
+    def create(uuid: AUTO_GENERATED_UUID, labels: NO_LABELS, properties: NO_PROPERTIES, root: false)
+      validate_attributes(uuid, labels, properties, root)
 
       uuid = prepare_uuid(uuid)
       labels = prepare_labels(labels)
       properties = prepare_properties(properties)
 
-      create_node(uuid, labels, properties)
+      create_node(uuid, labels, properties, root)
     end
 
     private
@@ -56,7 +56,7 @@ module MetaStruct::Graph::Node::Factory
     #
     # @api private
     # @since 0.1.0
-    def validate_attributes(uuid, labels, properties)
+    def validate_attributes(uuid, labels, properties, root)
       unless labels.is_a?(::Array)
         raise(MetaStruct::Graph::InvalidNodeLabelsError, <<~ERROR_MESSAGE)
           Node labels collection should be a type of Array of strings.
@@ -78,6 +78,12 @@ module MetaStruct::Graph::Node::Factory
       unless properties.keys.all? { |key| key.is_a?(::String) || key.is_a?(::Symbol) }
         raise(MetaStruct::Graph::InvalidNodePropertiesError, <<~ERROR_MESSAGE)
           Node property keys should be a type of string or symbol.
+        ERROR_MESSAGE
+      end
+
+      unless root.is_a?(::TrueClass) || root.is_a?(::FalseClass)
+        raise(MetaStruct::Graph::NodeArgumentError, <<~ERROR_MESSAGE)
+          Node root atribute should be a type of Boolean 
         ERROR_MESSAGE
       end
     end
@@ -116,8 +122,13 @@ module MetaStruct::Graph::Node::Factory
     #
     # @api private
     # @since 0.1.0
-    def create_node(uuid, labels, properties)
-      MetaStruct::Graph::Node.new(uuid: uuid, labels: labels, properties: properties)
+    def create_node(uuid, labels, properties, root)
+      MetaStruct::Graph::Node.new(
+        uuid: uuid, 
+        labels: labels, 
+        properties: properties,
+        root: root
+      )
     end
   end
 end

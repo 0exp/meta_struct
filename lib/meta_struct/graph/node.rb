@@ -15,8 +15,8 @@ class MetaStruct::Graph::Node
     # @api public
     # @since 0.1.0
     # rubocop:disable Layout/LineLength
-    def create(uuid: Factory::AUTO_GENERATED_UUID, labels: Factory::NO_LABELS, properties: Factory::NO_PROPERTIES)
-      Factory.create(uuid: uuid, labels: labels, properties: properties)
+    def create(uuid: Factory::AUTO_GENERATED_UUID, labels: Factory::NO_LABELS, properties: Factory::NO_PROPERTIES, root: false)
+      Factory.create(uuid: uuid, labels: labels, properties: properties, root: root)
     end
     # rubocop:enable Layout/LineLength
   end
@@ -39,6 +39,8 @@ class MetaStruct::Graph::Node
   # @since 0.1.0
   attr_reader :uuid
 
+  attr_reader :root
+
   # @option uuid [String]
   # @option labels [Array<String>]
   # @option properties [Hash<String,Any>]
@@ -46,9 +48,10 @@ class MetaStruct::Graph::Node
   #
   # @api public
   # @since 0.1.0
-  def initialize(uuid:, labels:, properties:)
+  def initialize(uuid:, labels:, properties:, root:)
     @uuid = uuid
     @labels = labels
     @properties = properties
+    @root = root
   end
 end

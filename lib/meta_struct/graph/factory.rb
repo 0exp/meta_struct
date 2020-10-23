@@ -65,6 +65,16 @@ module MetaStruct::Graph::Factory
     #
     # @api private
     # @since 0.1.0
-    def create_graph(point_tree); end
+    def create_graph(point_tree)
+      root_point = point_tree.detect do |point|
+        point.node.root
+      end
+
+      MetaStruct::Graph.new(root_point || empty_point)
+    end
+
+    def empty_point
+      MetaStruct::Graph::Point.new(nil, [])
+    end
   end
 end
