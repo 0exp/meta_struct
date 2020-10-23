@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module MetaStruct::Graph::Algorithms::GraphTraversal
+class MetaStruct::Graph::Algorithms::GraphTraversal
   class << self
     # @param graph [MetaStruct::Graph]
     # @param iterator [Block]
@@ -13,6 +13,24 @@ module MetaStruct::Graph::Algorithms::GraphTraversal
     #
     # @api private
     # @since 0.1.0
-    def traverse(graph, &iterator); end
+    def traverse(graph, &iterator)
+      return interator.call(graph) if block_given?
+
+      new(graph).traverse
+    end
   end
+
+  private_class_method :new
+
+  def initialize(graph)
+    @graph = graph
+  end
+
+  def traverse
+    DFSIterator.new(graph, tree)
+  end
+
+  private
+
+  attr_reader :graph
 end

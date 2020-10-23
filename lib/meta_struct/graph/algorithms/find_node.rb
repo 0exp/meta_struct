@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module MetaStruct::Graph::Algorithms::FindNode
+class MetaStruct::Graph::Algorithms::FindNode
   class << self
     # @param graph [MetaStruct::Graph]
     # @param node_uuid [String]
@@ -10,6 +10,23 @@ module MetaStruct::Graph::Algorithms::FindNode
     #
     # @api private
     # @since 0.1.0
-    def call(graph, node_uuid); end
+    def call(graph, node_uuid)
+      new(graph).find
+    end
   end
+
+  private_class_method :new
+
+  def initialize(graph, node_uuid)
+    @graph = graph
+    @node_uuid = node_uuid
+  end
+
+  def find
+  end
+
+  private
+
+  attr_reader :graph
+  attr_reader :node_uuid
 end

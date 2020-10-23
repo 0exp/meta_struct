@@ -15,6 +15,8 @@ class MetaStruct::Graph::Point
   # @since 0.1.0
   attr_reader :edges
 
+  attr_reader :children
+
   # @param node [MetaStruct::Graph::Node]
   # @param edges [Array<MetaStruct::Graph::Edge>]
   # @return [void]
@@ -24,5 +26,10 @@ class MetaStruct::Graph::Point
   def initialize(node, edges)
     @node = node
     @edges = edges
+    @children = []
+  end
+
+  def add_children(points)
+    @children += points
   end
 end

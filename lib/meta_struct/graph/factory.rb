@@ -36,7 +36,19 @@ module MetaStruct::Graph::Factory
     #
     # @api private
     # @since 0.1.0
-    def validate_attributes(nodes, edges); end
+    def validate_attributes(nodes, edges)
+      unless nodes.is_a?(::Array) && nodes.all? { |node| node.is_a?(MetaStruct::Graph::Node) }
+        raise(MetaStruct::Graph::NodeArgumentError, <<~ERROR_MESSAGE)
+          Nodes collection should be a type of Array of MetaStruct::Graph::Node.
+        ERROR_MESSAGE
+      end
+
+      unless edges.is_a?(::Array) && edges.all? { |edge| edge.is_a?(MetaStruct::Graph::Edge) }
+        raise(MetaStruct::Graph::EdgeArgumentError, <<~ERROR_MESSAGE)
+          Edges collection should be a type of Array of MetaStruct::Graph::Edge.
+        ERROR_MESSAGE
+      end
+    end
 
     # @param nodes [Array<MetaStruct::Graph::Node>]
     # @param edges [Array<MetaStruct::Graph::Edge>]
@@ -44,7 +56,9 @@ module MetaStruct::Graph::Factory
     #
     # @api private
     # @since 0.1.0
-    def build_point_tree(nodes, edges); end
+    def build_point_tree(nodes, edges)
+      MetaStruct::Graph::Points::BuildTree.call(nodes, edges)
+    end
 
     # @param [MetaStruct::Graph::Point]
     # @return [MetaStruct::Graph]
