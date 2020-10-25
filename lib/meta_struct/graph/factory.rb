@@ -65,10 +65,11 @@ module MetaStruct::Graph::Factory
       end
 
       if edges.uniq { |edge| [edge.left_node.uuid, edge.right_node.uuid] }.size < edges.size
-        raise(MetaStruct::Graph::EdgeListDuplicateError, <<~ERROR_MESSAGE)
-          You have duplicated edges (by identical nodes in left and right sides).
-          You should provide edges without duplicates.
-        ERROR_MESSAGE
+        raise(
+          MetaStruct::Graph::EdgeListDuplicateError,
+          "You have duplicated edges (by identical nodes in left and right sides). " \
+          "You should provide edges without duplicates."
+        )
       end
 
       unless edges.all? { |edge| nodes.include?(edge.left_node) && nodes.include?(edge.right_node) }

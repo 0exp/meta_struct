@@ -110,9 +110,8 @@ RSpec.describe MetaStruct::Graph do
         end.not_to raise_error(MetaStruct::Graph::NonConnectedNodeError)
       end
 
-      specify 'has only one root' do
-      end
-
+      pending 'has only one root'
+      pending 'has at least one exit'
       pending 'has no cycles'
     end
   end

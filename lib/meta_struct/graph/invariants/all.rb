@@ -12,9 +12,15 @@ module MetaStruct::Graph::Invariants
       # @api private
       # @since 0.1.0
       def validate!(nodes, edges)
-        HasNoNonconnectedNodes.validate!(nodes, edges)
-        HasOneRoot.validate!(nodes, edges)
-        HasNoCycles.validate!(nodes, edges)
+        self.then do
+          HasNoNonconnectedNodes.validate!(nodes, edges)
+        end.then do
+          HasOneRoot.validate!(nodes, edges)
+        end.then do
+          HasAtLeastOne.validate!(nodes)
+        end.then do
+          HasNoCycles.validate!(nodes, edges)
+        end
       end
     end
   end

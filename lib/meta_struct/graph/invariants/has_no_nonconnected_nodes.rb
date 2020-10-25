@@ -14,10 +14,11 @@ module MetaStruct::Graph::Invariants::HasNoNonconnectedNodes
       non_connected_nodes = find_non_connected_nodes(nodes, edges)
 
       unless non_connected_nodes.empty?
-        raise(MetaStruct::Graph::NonConnectedNodeError, <<~ERROR_MESSAGE)
-          Some nodes has no edges (all nodes should have edges).
-          Non-connected nodes: #{non_connected_nodes.map(&:uuid).join(", ")}.
-        ERROR_MESSAGE
+        raise(
+          MetaStruct::Graph::NonConnectedNodeError,
+          "Some nodes has no edges (all nodes should have edges). " \
+          "Non-connected node UUIDs: #{non_connected_nodes.map(&:uuid).join(', ')}."
+        )
       end
     end
 
@@ -30,7 +31,8 @@ module MetaStruct::Graph::Invariants::HasNoNonconnectedNodes
     # @api private
     # @since 0.1.0
     def find_non_connected_nodes(nodes, edges)
-      nodes.reject do |node| edges.any? do |edge|
+      nodes.reject do |node|
+        edges.any? do |edge|
           edge.left_node == node || edge.right_node == node
         end
       end
