@@ -6,9 +6,9 @@ MetaStruct - a collection of strongly business-oriented variants of commonly use
 
 ## Table of usage
 
-- [Immutable directed acyclic graph](#metastructgraph) `MetaStruct::Graph`
-  - [Graph Creation](#graph-creation)
+- [MetaStruct::Graph](#metastructgraph) (Immutable directed acyclic graph)
   - [Graph Invariants](#graph-invariants)
+  - [Graph Creation](#graph-creation)
 - [Contributing](#contributing)
 - [License](#license)
 - [Authors](#authors)
@@ -19,10 +19,17 @@ MetaStruct - a collection of strongly business-oriented variants of commonly use
 
 `MetaStruct::Graph` - directed acyclic graph. Realized as a representational data structure (without mutation interfaces).
 
-- [Graph Creation](#graph-creation)
 - [Graph Invariants](#graph-invariants)
+- [Graph Creation](#graph-creation)
 
 ---
+
+### Graph Invariants:
+
+- has only one root node;
+- has no non-connected nodes;
+- has no cycles (in development);
+- has exit (at least one);
 
 ### Graph Creation
 
@@ -60,15 +67,6 @@ MetaStruct::Graph.create(
   edges: _your_array_of_edges # [] by default
 )
 ```
-
----
-
-### Graph Invariants:
-
-- has only one root node;
-- has no non-connected nodes;
-- has no cycles (in development);
-- has exit (at least one);
 
 ---
 
