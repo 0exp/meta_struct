@@ -26,7 +26,7 @@ module MetaStruct::Graph::Factory
       validate_attributes(nodes, edges)
       validate_graph_invariants(nodes, edges)
       point_tree = build_point_tree(nodes, edges)
-      create_graph(point_tree)
+      create_graph(point_tree, nodes, edges)
     end
 
     private
@@ -104,6 +104,8 @@ module MetaStruct::Graph::Factory
     #
     # @api private
     # @since 0.1.0
-    def create_graph(point_tree); end
+    def create_graph(root_point, nodes, edges)
+      MetaStruct::Graph.new(root_point, nodes, edges)
+    end
   end
 end

@@ -103,11 +103,11 @@ RSpec.describe MetaStruct::Graph do
         end.to raise_error(MetaStruct::Graph::NonConnectedNodeError)
 
         expect do # has no incosistent invariant
-          MetaStruct::Graph::Create(
-            node: [node_1, node_2, node_3],
+          MetaStruct::Graph.create(
+            nodes: [node_1, node_2, node_3],
             edges: [edge_1, edge_2]
           )
-        end.not_to raise_error(MetaStruct::Graph::NonConnectedNodeError)
+        end.not_to raise_error
       end
 
       pending 'has only one root'

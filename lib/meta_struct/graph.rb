@@ -30,12 +30,16 @@ class MetaStruct::Graph
   attr_reader :root
 
   # @param root [MetaStruct::Graph::Point]
+  # @param nodes [Array<MetaStruct::Graph::Node>]
+  # @param edges [Array<MetaStruct::Graph::Edge>]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(root)
+  def initialize(root, nodes, edges)
     @root = root
+    @nodes = nodes
+    @edges = edges
   end
 
   # @param node_uuid [String]
@@ -45,14 +49,6 @@ class MetaStruct::Graph
   # @since 0.1.0
   def find_node(node_uuid)
     Algorithms::FindNode.call(self, node_uuid)
-  end
-
-  # @return [Array<MetaStruct::Graph::Point>]
-  #
-  # @api public
-  # @since 0.1.0
-  def find_bound_nodes
-    Algorithms::FindBoundNodes.call(self)
   end
 
   # @param iterator [Block]
