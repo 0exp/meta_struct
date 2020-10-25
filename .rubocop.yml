@@ -17,3 +17,7 @@ AllCops:
 # NOTE: disabled for better code clarity in specs
 RSpec/DescribedClass:
   Enabled: false
+
+# NOTE: degrades performance
+Style/MultipleComparison:
+  Enabled: false

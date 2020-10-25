@@ -13,135 +13,141 @@ class MetaStruct::Graph
   # @since 0.1.0
   ArgumentError = Class.new(MetaStruct::ArgumentError)
 
-  # @return [Class<Error>]
+  # @return [Class<MetaStruct::Graph::Error>]
   #
   # @api public
   # @since 0.1.0
   NodeError = Class.new(Error)
 
-  # @return [Class<ArgumentError>]
+  # @return [Class<MetaStruct::Graph::ArgumentError>]
   #
   # @api public
   # @since 0.1.0
   NodeArgumentError = Class.new(ArgumentError)
 
-  # @return [Class<NodeArgumentError>]
+  # @return [Class<MetaStruct::Graph::NodeArgumentError>]
   #
   # @api public
   # @since 0.1.0
   InvalidNodeLabelsError = Class.new(NodeArgumentError)
 
-  # @return [Class<NodeArgumentError>]
+  # @return [Class<MetaStruct::Graph::NodeArgumentError>]
   #
   # @api public
   # @since 0.1.0
   InvalidNodePropertiesError = Class.new(NodeArgumentError)
 
-  # @return [Class<Error>]
+  # @return [Class<MetaStruct::Graph::Error>]
   #
   # @api public
   # @since 0.1.0
   EdgeError = Class.new(Error)
 
-  # @return [Class<ArgumentError>]
+  # @return [Class<MetaStruct::Graph::ArgumentError>]
   #
   # @api public
   # @since 0.1.0
   EdgeArgumentError = Class.new(ArgumentError)
 
-  # @return [Class<EdgeArgumentError>]
+  # @return [Class<MetaStruct::Graph::EdgeArgumentError>]
   #
   # @api public
   # @since 0.1.0
   InvalidEdgeWeightError = Class.new(EdgeArgumentError)
 
-  # @return [Class<EdgeArgumentError>]
+  # @return [Class<MetaStruct::Graph::EdgeArgumentError>]
   #
   # @api public
   # @since 0.1.0
   InvalidEdgeNodeError = Class.new(EdgeArgumentError)
 
-  # @return [Class<EdgeArgumentError>]
+  # @return [Class<MetaStruct::Graph::EdgeArgumentError>]
   #
   # @api public
   # @since 0.1.0
   EdgeNodeInsufficiencyError = Class.new(EdgeArgumentError)
 
-  # @return [Class<EdgeArgumentError>]
+  # @return [Class<MetaStruct::Graph::EdgeArgumentError>]
   #
   # @api public
   # @since 0.1.0
   InvalidEdgeLabelsError = Class.new(EdgeArgumentError)
 
-  # @return [Class<EdgeArgumentError>]
+  # @return [Class<MetaStruct::Graph::EdgeArgumentError>]
   #
   # @api public
   # @since 0.1.0
   InvalidEdgePropertiesError = Class.new(EdgeArgumentError)
 
-  # @return [Class<Error>]
+  # @return [Class<MetaStruct::Graph::Error>]
   #
   # @api public
   # @since 0.1.0
   GraphError = Class.new(Error)
 
-  # @return [Class<ArgumentError>]
+  # @return [Class<MetaStruct::Graph::ArgumentError>]
   #
   # @api public
   # @since 0.1.0
   GraphArgumentError = Class.new(ArgumentError)
 
-  # @return [Class<GraphArgumentError>]
+  # @return [Class<MetaStruct::Graph::GraphArgumentError>]
   #
   # @api public
   # @since 0.1.0
   EmptyNodeListError = Class.new(GraphArgumentError)
 
-  # @return [Class<GraphArgumentError>]
+  # @return [Class<MetaStruct::Graph::GraphArgumentError>]
   #
   # @api public
   # @since 0.1.0
   EmptyEdgeListError = Class.new(GraphArgumentError)
 
-  # @return [Class<GraphArgumentError>]
+  # @return [Class<MetaStruct::Graph::GraphArgumentError>]
   #
   # @api public
   # @since 0.1.0
   InvalidNodeListError = Class.new(GraphArgumentError)
 
-  # @return [Class<GraphArgumentError>]
+  # @return [Class<MetaStruct::Graph::GraphArgumentError>]
   #
   # @api public
   # @since 0.1.0
   InvalidEdgeListError = Class.new(GraphArgumentError)
 
-  # @return [Class<GraphArgumentError>]
+  # @return [Class<MetaStruct::Graph::GraphArgumentError>]
   #
   # @api public
   # @since 0.1.0
   UnprovidedNodeEntityError = Class.new(GraphArgumentError)
 
-  # @return [Class<GraphArgumentError>]
+  # @return [Class<MetaStruct::Graph::GraphArgumentError>]
   #
   # @api public
   # @since 0.1.0
   NodeListDuplicateError = Class.new(GraphArgumentError)
 
-  # @return [Class<GraphArgumentError>]
+  # @return [Class<MetaStruct::Graph::GraphArgumentError>]
   #
   # @api public
   # @since 0.1.0
   EdgeListDuplicateError = Class.new(GraphArgumentError)
 
-  # @return [Class<GraphError>]
+  # @return [Class<MetaStruct::Graph::GraphError>]
   #
   # @api public
   # @since 0.1.0
   InvariantError = Class.new(GraphError)
 
-  # @return [Class<InvariantError>]
+  # @return [Class<MetaStruct::Graph::InvariantError>]
   #
   # @api public
   # @since 0.1.0
-  NonConnectedNodeError = Class.new(InvariantError)
+  NonConnectedNodeInvariantError = Class.new(InvariantError)
+
+  # @return [Class<MetaStruct::Graph::InvariantError>]
+  #
+  # @api private
+  # @since 0.1.0
+  MoreThanOneRootInvariantError = Class.new(InvariantError)
 end

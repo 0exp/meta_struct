@@ -37,6 +37,10 @@ module MetaStruct::Graph::Factory
     #
     # @api private
     # @since 0.1.0
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
     def validate_attributes(nodes, edges)
       unless nodes.is_a?(::Array) && nodes.all? { |node| node.is_a?(MetaStruct::Graph::Node) }
         raise(MetaStruct::Graph::InvalidNodeListError, <<~ERROR_MESSAGE)
@@ -58,7 +62,7 @@ module MetaStruct::Graph::Factory
         You should provide edges for correct graph entity.
       ERROR_MESSAGE
 
-      if nodes.uniq { |node| node.uuid }.size < nodes.size
+      if nodes.uniq(&:uuid).size < nodes.size
         raise(MetaStruct::Graph::NodeListDuplicateError, <<~ERROR_MESSAGE)
           You have nodes with duplicated uuids. You should provide nodes without duplicates.
         ERROR_MESSAGE
@@ -67,8 +71,8 @@ module MetaStruct::Graph::Factory
       if edges.uniq { |edge| [edge.left_node.uuid, edge.right_node.uuid] }.size < edges.size
         raise(
           MetaStruct::Graph::EdgeListDuplicateError,
-          "You have duplicated edges (by identical nodes in left and right sides). " \
-          "You should provide edges without duplicates."
+          'You have duplicated edges (by identical nodes in left and right sides). ' \
+          'You should provide edges without duplicates.'
         )
       end
 
@@ -78,6 +82,10 @@ module MetaStruct::Graph::Factory
         ERROR_MESSAGE
       end
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/PerceivedComplexity
 
     # @param nodes [Array<MetaStruct::Graph::Node>]
     # @param edges [Array<MetaStruct::Graph::Edge>]

@@ -4,9 +4,11 @@ RSpec.describe MetaStruct::Graph do
   let!(:node_1) { MetaStruct::Graph::Node.create(uuid: 'n1') }
   let!(:node_2) { MetaStruct::Graph::Node.create(uuid: 'n2') }
   let!(:node_3) { MetaStruct::Graph::Node.create(uuid: 'n3') }
+  let!(:node_4) { MetaStruct::Graph::Node.create(uuid: 'n4') }
 
   let!(:edge_1) { MetaStruct::Graph::Edge.create(left_node: node_1, right_node: node_2) }
   let!(:edge_2) { MetaStruct::Graph::Edge.create(left_node: node_2, right_node: node_3) }
+  let!(:edge_3) { MetaStruct::Graph::Edge.create(left_node: node_4, right_node: node_2) }
 
   describe 'creation' do
     describe 'attribute incompatability' do
@@ -89,7 +91,7 @@ RSpec.describe MetaStruct::Graph do
 
     describe 'invariants' do
       specify 'has no non-connected nodes' do
-        expect do # has inconsistent invariant
+        expect do # has inconsistent invariant - bad
           MetaStruct::Graph.create(
             nodes: [
               node_1,
@@ -100,9 +102,9 @@ RSpec.describe MetaStruct::Graph do
               edge_1 # connects node_1 and node_2 only
             ]
           )
-        end.to raise_error(MetaStruct::Graph::NonConnectedNodeError)
+        end.to raise_error(MetaStruct::Graph::NonConnectedNodeInvariantError)
 
-        expect do # has no incosistent invariant
+        expect do # has no incosistent invariant - good
           MetaStruct::Graph.create(
             nodes: [node_1, node_2, node_3],
             edges: [edge_1, edge_2]
@@ -110,7 +112,37 @@ RSpec.describe MetaStruct::Graph do
         end.not_to raise_error
       end
 
-      pending 'has only one root'
+      specify 'has only one root' do
+        expect do # has only one root - good
+          # NOTE: graph: (1->2),(2->3)
+          MetaStruct::Graph.create(
+            nodes: [node_1, node_2, node_3],
+            edges: [edge_1, edge_2]
+          )
+        end.not_to raise_error
+
+        expect do # has more than one root - bad
+          # NOTE: graph: (1->2),(4->2),(2->3),
+          MetaStruct::Graph.create(
+            nodes: [node_1, node_2, node_3, node_4],
+            edges: [edge_1, edge_2, edge_3]
+          )
+        end.to raise_error(MetaStruct::Graph::MoreThanOneRootInvariantError)
+
+        expect do # has no roots at all ("circle"-like cycle) - bad
+          # NoTE: graph: (1->2),(2->3),(3->1))
+          node_1 = MetaStruct::Graph::Node.create(uuid: 'n1')
+          node_2 = MetaStruct::Graph::Node.create(uuid: 'n2')
+          node_3 = MetaStruct::Graph::Node.create(uuid: 'n3')
+
+          edge_1 = MetaStruct::Graph::Edge.create(left_node: node_1, right_node: node_2)
+          edge_2 = MetaStruct::Graph::Edge.create(left_node: node_2, right_node: node_3)
+          edge_3 = MetaStruct::Graph::Edge.create(left_node: node_3, right_node: node_1)
+
+          MetaStruct::Graph.create(nodes: [node_1, node_2, node_3], edges: [edge_1, edge_2, edge_3])
+        end.to raise_error(MetaStruct::Graph::MoreThanOneRootInvariantError)
+      end
+
       pending 'has at least one exit'
       pending 'has no cycles'
     end

@@ -15,7 +15,7 @@ module MetaStruct::Graph::Invariants::HasNoNonconnectedNodes
 
       unless non_connected_nodes.empty?
         raise(
-          MetaStruct::Graph::NonConnectedNodeError,
+          MetaStruct::Graph::NonConnectedNodeInvariantError,
           "Some nodes has no edges (all nodes should have edges). " \
           "Non-connected node UUIDs: #{non_connected_nodes.map(&:uuid).join(', ')}."
         )
