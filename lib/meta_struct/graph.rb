@@ -7,6 +7,7 @@ class MetaStruct::Graph
   require_relative 'graph/node'
   require_relative 'graph/edge'
   require_relative 'graph/point'
+  require_relative 'graph/invariants'
   require_relative 'graph/factory'
   require_relative 'graph/algorithms'
 
@@ -17,7 +18,7 @@ class MetaStruct::Graph
     #
     # @api public
     # @since 0.1.0
-    def create(nodes: Factpry::NO_NODES, edges: Factory::NO_EDGES)
+    def create(nodes: Factory::NO_NODES, edges: Factory::NO_EDGES)
       Factory.create(node: nodes, edges: edges)
     end
   end

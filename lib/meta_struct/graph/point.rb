@@ -3,6 +3,10 @@
 # @api private
 # @since 0.1.0
 class MetaStruct::Graph::Point
+  require_relative 'point/edge'
+  require_relative 'point/factory'
+  require_relative 'point/tree_factory'
+
   # @return [MetaStruct::Graph::Node]
   #
   # @api private

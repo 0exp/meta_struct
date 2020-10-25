@@ -78,4 +78,22 @@ class MetaStruct::Graph
   # @api public
   # @since 0.1.0
   InvalidEdgePropertiesError = Class.new(EdgeArgumentError)
+
+  # @return [Class<ArgumentError>]
+  #
+  # @api public
+  # @since 0.1.0
+  GraphArgumentError = Class.new(ArgumentError)
+
+  # @return [Class<GraphArgumentError>]
+  #
+  # @api public
+  # @since 0.1.0
+  InvalidNodeListError = Class.new(GraphArgumentError)
+
+  # @return [Class<GraphArgumentError>]
+  #
+  # @api public
+  # @since 0.1.0
+  InvalidEdngeListError = Class.new(GraphArgumentError)
 end
