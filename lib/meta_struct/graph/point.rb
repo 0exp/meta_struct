@@ -9,24 +9,32 @@ class MetaStruct::Graph::Point
 
   # @return [MetaStruct::Graph::Node]
   #
-  # @api private
+  # @api public
   # @since 0.1.0
   attr_reader :node
 
-  # @return [Array<MetaStruct::Graph::Edge>]
+  # @return [Array<MetaStruct::Graph::Point>]
   #
   # @api private
   # @since 0.1.0
-  attr_reader :edges
+  attr_reader :adjacencies
 
   # @param node [MetaStruct::Graph::Node]
-  # @param edges [Array<MetaStruct::Graph::Edge>]
+  # @param adjacencies [Array<MetaStruct::Graph::Point>]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(node, edges)
+  def initialize(node, adjacencies)
     @node = node
-    @edges = edges
+    @adjacencies = adjacencies
+  end
+
+  # @return [String]
+  #
+  # @api public
+  # @since 0.1.0
+  def uuid
+    node.uuid
   end
 end

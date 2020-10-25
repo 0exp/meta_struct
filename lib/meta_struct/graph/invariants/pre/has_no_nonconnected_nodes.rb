@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module MetaStruct::Graph::Invariants::HasNoNonconnectedNodes
+module MetaStruct::Graph::Invariants::Pre::HasNoNonconnectedNodes
   class << self
     # @param nodes [Array<MetaStruct::Graph::Node>]
     # @param edges [Array<MetaStruct::Graph::Edge>]

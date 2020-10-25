@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module MetaStruct::Graph::Invariants
+module MetaStruct::Graph::Invariants::Pre
   module All
     class << self
       # @param nodes [Array<MetaStruct::Graph::Node>]
@@ -18,8 +18,6 @@ module MetaStruct::Graph::Invariants
           HasOnlyOneRoot.validate!(nodes, edges)
         end.then do
           HasAtLeastOneExit.validate!(nodes, edges)
-        end.then do
-          HasNoCycles.validate!(nodes, edges)
         end
       end
     end

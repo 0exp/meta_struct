@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module MetaStruct::Graph::Invariants::HasAtLeastOneExit
+module MetaStruct::Graph::Invariants::Pre::HasAtLeastOneExit
   class << self
     # @param nodes [Array<MetaStruct::Graph::Node>]
     # @param edges [Array<MetaStruct::Graph::Edge>]
