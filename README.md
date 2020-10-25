@@ -6,7 +6,7 @@ MetaStruct - a collection of strongly business-oriented variants of commonly use
 
 ## Table of usage
 
-- [MetaStruct::Graph](#metastructgraph) (Immutable directed acyclic graph)
+- [MetaStruct::Graph](#metastructgraph) (immutable directed acyclic graph)
   - [Graph Invariants](#graph-invariants)
   - [Graph Creation](#graph-creation)
 - [Contributing](#contributing)
@@ -30,6 +30,8 @@ MetaStruct - a collection of strongly business-oriented variants of commonly use
 - has no non-connected nodes;
 - has no cycles (in development);
 - has exit (at least one);
+
+---
 
 ### Graph Creation
 
