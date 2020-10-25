@@ -78,7 +78,7 @@ module MetaStruct::Graph::Factory
 
       unless edges.all? { |edge| nodes.include?(edge.left_node) && nodes.include?(edge.right_node) }
         raise(MetaStruct::Graph::UnprovidedNodeEntityError, <<~ERROR_MESSAGE)
-          Some edges has no MetaStruct::Graph::Node entity in node list.
+          Some edges has no corresponding MetaStruct::Graph::Node entity in node list.
         ERROR_MESSAGE
       end
     end

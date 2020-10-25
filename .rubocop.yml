@@ -21,3 +21,7 @@ RSpec/DescribedClass:
 # NOTE: degrades performance
 Style/MultipleComparison:
   Enabled: false
+
+# NOTE: for domain logic clarity
+Style/ZeroLengthPredicate:
+  Enabled: false

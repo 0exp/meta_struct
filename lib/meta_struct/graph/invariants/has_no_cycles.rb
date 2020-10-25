@@ -10,6 +10,8 @@ module MetaStruct::Graph::Invariants::HasNoCycles
     #
     # @api private
     # @since 0.1.0
-    def validate!(nodes, edges); end
+    def validate!(nodes, edges)
+      # TODO: implement
+    end
   end
 end

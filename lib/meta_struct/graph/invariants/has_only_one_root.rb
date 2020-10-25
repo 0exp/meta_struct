@@ -13,7 +13,13 @@ module MetaStruct::Graph::Invariants::HasOnlyOneRoot
     def validate!(nodes, edges)
       root_nodes = find_roots(nodes, edges)
 
-      unless root_nodes.size == 1
+      case
+      when root_nodes.size == 0
+        raise(
+          MetaStruct::Graph::RootNotFoundInvariantError,
+          'Your graph has no root node.'
+        )
+      when root_nodes.size != 1
         raise(
           MetaStruct::Graph::MoreThanOneRootInvariantError,
           "Your graph has more than one root (you can have only one root in graph entity). " \
@@ -25,22 +31,22 @@ module MetaStruct::Graph::Invariants::HasOnlyOneRoot
     private
 
     # @param nodes [Array<MetaStruct::Graph::Node>]
-    # @param edges [Array<MetaStruct::Graph::Edge>]s
+    # @param edges [Array<MetaStruct::Graph::Edge>]
     # @return [Array<MetaStruct::Graph::Node>]
     #
     # @api private
     # @since 0.1.0
     def find_roots(nodes, edges)
-      nodes - find_exits(nodes, edges)
+      nodes - find_bounds(nodes, edges)
     end
 
     # @param nodes [Array<MetaStruct::Graph::Node>]
-    # @param edges [Array<MetaStruct::Graph::Edge>]s
+    # @param edges [Array<MetaStruct::Graph::Edge>]
     # @return [Array<MetaStruct::Graph::Node>]
     #
     # @api private
     # @since 0.1.0
-    def find_exits(nodes, edges)
+    def find_bounds(nodes, edges)
       nodes.select { |node| edges.any? { |edge| edge.right_node == node } }
     end
   end

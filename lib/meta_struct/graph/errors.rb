@@ -147,7 +147,19 @@ class MetaStruct::Graph
 
   # @return [Class<MetaStruct::Graph::InvariantError>]
   #
-  # @api private
+  # @api public
   # @since 0.1.0
   MoreThanOneRootInvariantError = Class.new(InvariantError)
+
+  # @return [Class<MetaStruct::Graph::InvariantError>]
+  #
+  # @api public
+  # @since 0.1.0
+  RootNotFoundInvariantError = Class.new(InvariantError)
+
+  # @return [Class<MetaStruct::Graph::InvariantError>]
+  #
+  # @api public
+  # @since 0.1.0
+  NoExitNodeInvariantError = Class.new(InvariantError)
 end
