@@ -44,7 +44,7 @@ class MetaStruct::Graph::Node
   # @option properties [Hash<String,Any>]
   # @return [void]
   #
-  # @api public
+  # @api private
   # @since 0.1.0
   def initialize(uuid:, labels:, properties:)
     @uuid = uuid

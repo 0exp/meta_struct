@@ -45,8 +45,35 @@ module MetaStruct::Graph::Factory
       end
 
       unless edges.is_a?(::Array) && edges.all? { |edge| edge.is_a?(MetaStruct::Graph::Edge) }
-        raise(MetaStruct::Graph::InvalidEdngeListError, <<~ERROR_MESSAGE)
+        raise(MetaStruct::Graph::InvalidEdgeListError, <<~ERROR_MESSAGE)
           Edge list should be an array of MetaStruct::Graph::Edge entities.
+        ERROR_MESSAGE
+      end
+
+      raise(MetaStruct::Graph::EmptyNodeListError, <<~ERROR_MESSAGE) if nodes.empty?
+        You should provide nodes for correct graph entity.
+      ERROR_MESSAGE
+
+      raise(MetaStruct::Graph::EmptyEdgeListError, <<~ERROR_MESSAGE) if edges.empty?
+        You should provide edges for correct graph entity.
+      ERROR_MESSAGE
+
+      if nodes.uniq { |node| node.uuid }.size < nodes.size
+        raise(MetaStruct::Graph::NodeListDuplicateError, <<~ERROR_MESSAGE)
+          You have nodes with duplicated uuids. You should provide nodes without duplicates.
+        ERROR_MESSAGE
+      end
+
+      if edges.uniq { |edge| [edge.left_node.uuid, edge.right_node.uuid] }.size < edges.size
+        raise(MetaStruct::Graph::EdgeListDuplicateError, <<~ERROR_MESSAGE)
+          You have duplicated edges (by identical nodes in left and right sides).
+          You should provide edges without duplicates.
+        ERROR_MESSAGE
+      end
+
+      unless edges.all? { |edge| nodes.include?(edge.left_node) && nodes.include?(edge.right_node) }
+        raise(MetaStruct::Graph::UnprovidedNodeEntityError, <<~ERROR_MESSAGE)
+          Some edges has no MetaStruct::Graph::Node entity in node list.
         ERROR_MESSAGE
       end
     end

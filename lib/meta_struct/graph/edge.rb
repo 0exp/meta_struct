@@ -13,7 +13,7 @@ class MetaStruct::Graph::Edge
     # @option weight [Integer]
     # @return [MetaStruct::Graph::Edge]
     #
-    # @api public
+    # @api private
     # @since 0.1.0
     def create(
       left_node: Factory::NO_LEFT_NODE,

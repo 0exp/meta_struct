@@ -23,7 +23,7 @@ class MetaStruct::Graph::Point
   # @param edges [Array<MetaStruct::Graph::Edge>]
   # @return [void]
   #
-  # @api public
+  # @api private
   # @since 0.1.0
   def initialize(node, edges)
     @node = node

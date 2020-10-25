@@ -19,7 +19,7 @@ class MetaStruct::Graph
     # @api public
     # @since 0.1.0
     def create(nodes: Factory::NO_NODES, edges: Factory::NO_EDGES)
-      Factory.create(node: nodes, edges: edges)
+      Factory.create(nodes: nodes, edges: edges)
     end
   end
 
@@ -32,7 +32,7 @@ class MetaStruct::Graph
   # @param root [MetaStruct::Graph::Point]
   # @return [void]
   #
-  # @api public
+  # @api private
   # @since 0.1.0
   def initialize(root)
     @root = root
