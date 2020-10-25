@@ -29,6 +29,10 @@ MetaStruct::Graph::Edge.create(
 ```
 
 - build graph `MetaStruct::Graph`:
+  - fails on duplicated nodes (nodes with duplicated `uuid`s);
+  - fails on duplicated edges (duplicated edge objects wich have identical left and right nodes);
+  - fails on situation, when node has no edge entity (presented in edge list);
+  - fails on situation, when edge has node which is not presented in node list;
 
 ```ruby
 MetaStruct::Graph.create(
@@ -36,6 +40,13 @@ MetaStruct::Graph.create(
   edges: _your_array_of_edges # [] by default
 )
 ```
+
+### Graph Invariants:
+
+- has only one root node;
+- has no non-connected nodes;
+- has no cycles (in development);
+- has exit (at least one);
 
 ## Contributing
 

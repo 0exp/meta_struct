@@ -87,8 +87,8 @@ RSpec.describe MetaStruct::Graph do
       end
     end
 
-    describe 'invariant incompatability' do
-      specify 'fails on non-connected nodes' do
+    describe 'invariants' do
+      specify 'has no non-connected nodes' do
         expect do # has inconsistent invariant
           MetaStruct::Graph.create(
             nodes: [
@@ -109,6 +109,11 @@ RSpec.describe MetaStruct::Graph do
           )
         end.not_to raise_error(MetaStruct::Graph::NonConnectedNodeError)
       end
+
+      specify 'has only one root' do
+      end
+
+      pending 'has no cycles'
     end
   end
 end
