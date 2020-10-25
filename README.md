@@ -1,8 +1,28 @@
 # MetaStruct
 
+MetaStruct - a collection of strongly business-oriented variants of commonly used data structures such as graphs, lists and etc.
+
+---
+
+## Table of usage
+
+- [Immutable directed acyclic graph](#metastructgraph) `MetaStruct::Graph`
+  - [Graph Creation](#graph-creation)
+  - [Graph Invariants](#graph-invariants)
+- [Contributing](#contributing)
+- [License](#license)
+- [Authors](#authors)
+
+---
+
 ## MetaStruct::Graph
 
 `MetaStruct::Graph` - directed acyclic graph. Realized as a representational data structure (without mutation interfaces).
+
+- [Graph Creation](#graph-creation)
+- [Graph Invariants](#graph-invariants)
+
+---
 
 ### Graph Creation
 
@@ -41,12 +61,16 @@ MetaStruct::Graph.create(
 )
 ```
 
+---
+
 ### Graph Invariants:
 
 - has only one root node;
 - has no non-connected nodes;
 - has no cycles (in development);
 - has exit (at least one);
+
+---
 
 ## Contributing
 
