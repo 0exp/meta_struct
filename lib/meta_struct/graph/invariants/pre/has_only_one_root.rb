@@ -47,7 +47,7 @@ module MetaStruct::Graph::Invariants::Pre::HasOnlyOneRoot
     # @api private
     # @since 0.1.0
     def find_bounds(nodes, edges)
-      nodes.select { |node| edges.any? { |edge| edge.right_node == node } }
+      edges.map(&:right_node)
     end
   end
 end
