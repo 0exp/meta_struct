@@ -11,7 +11,7 @@ module MetaStruct::Graph::Invariants::Pre::HasAtLeastOneExit
     # @api private
     # @since 0.1.0
     def validate!(nodes, edges)
-      bound_nodes = find_bounds(nodes, edges)
+      bound_nodes = find_bounds(edges)
 
       raise(
         MetaStruct::Graph::NoExitNodeInvariantError,
@@ -21,13 +21,12 @@ module MetaStruct::Graph::Invariants::Pre::HasAtLeastOneExit
 
     private
 
-    # @param nodes [Array<MetaStruct::Graph::Node>]
     # @param edges [Array<MetaStruct::Graph::Edge>]
     # @return [Array<MetaStruct::Graph::Node>]
     #
     # @api private
     # @since 0.1.0
-    def find_bounds(nodes, edges)
+    def find_bounds(edges)
       right_nodes = edges.map(&:right_node)
       left_nodes = edges.map(&:left_node)
 

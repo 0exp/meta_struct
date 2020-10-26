@@ -59,9 +59,11 @@ module MetaStruct::Graph::Factory
         You should provide nodes for correct graph entity.
       ERROR_MESSAGE
 
-      raise(MetaStruct::Graph::EmptyEdgeListError, <<~ERROR_MESSAGE) if edges.empty?
-        You should provide edges for correct graph entity.
-      ERROR_MESSAGE
+      if nodes.size > 1 && edges.empty?
+        raise(MetaStruct::Graph::EmptyEdgeListError, <<~ERROR_MESSAGE)
+          You should provide edges for correct graph entity.
+        ERROR_MESSAGE
+      end
 
       if nodes.uniq(&:uuid).size < nodes.size
         raise(MetaStruct::Graph::NodeListDuplicateError, <<~ERROR_MESSAGE)
