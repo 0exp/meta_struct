@@ -15,7 +15,7 @@ module MetaStruct::Graph::Point::TreeFactory
       root_node = find_root(nodes, edges)
 
       wrrapped_points.each do |uuid, point|
-        right_edges = edges.select { |edge| edge.left_node.uuid = uuid }
+        right_edges = edges.select { |edge| edge.left_node.uuid == uuid }
 
         next unless right_edges.any?
         
