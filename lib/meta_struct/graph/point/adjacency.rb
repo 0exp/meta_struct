@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-class MetaStruct::Graph::Point::Edge
+class MetaStruct::Graph::Point::Adjacency
   # @return [MetaStruct::Graph::Point]
   #
   # @api private
