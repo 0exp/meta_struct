@@ -28,7 +28,7 @@ module MetaStruct::Graph::Point::TreeFactory
     private
 
     def find_root(nodes, edges)
-      nodes - find_bounds(nodes, edges)
+      (nodes - find_bounds(nodes, edges)).first
     end
 
     def find_bounds(nodes, edges)
