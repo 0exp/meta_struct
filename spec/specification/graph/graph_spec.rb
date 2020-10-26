@@ -130,7 +130,7 @@ RSpec.describe MetaStruct::Graph do
         end.to raise_error(MetaStruct::Graph::MoreThanOneRootInvariantError)
 
         expect do # has no roots at all ("circle"-like cycle) - bad
-          # NOTE: graph: (1->2),(2->3),(3->1))
+          # NOTE: graph: (1->2),(2->3),(3->1)
           node_1 = MetaStruct::Graph::Node.create(uuid: 'n1')
           node_2 = MetaStruct::Graph::Node.create(uuid: 'n2')
           node_3 = MetaStruct::Graph::Node.create(uuid: 'n3')

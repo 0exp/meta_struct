@@ -10,6 +10,8 @@ module MetaStruct::Graph::Point::TreeFactory
     #
     # @api private
     # @since 0.1.0
-    def create(nodes, edges); end
+    def create(nodes, edges)
+
+    end
   end
 end
