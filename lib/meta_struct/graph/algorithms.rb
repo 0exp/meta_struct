@@ -5,4 +5,5 @@
 module MetaStruct::Graph::Algorithms
   require_relative 'algorithms/find_node'
   require_relative 'algorithms/graph_traversal'
+  require_relative 'algorithms/find_root_nodes'
 end

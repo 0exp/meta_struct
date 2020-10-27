@@ -12,6 +12,7 @@ module MetaStruct::Graph::Point::TreeFactory
     # @since 0.1.0
     def create(nodes, edges)
       wrrapped_points = wrap_to_points(nodes)
+      root_node = MetaStruct::Graph::Algorithms::FindRootNodes.call(nodes, edges).first
 
       wrrapped_points.each do |point|
         right_edges = edges.select { |edge| edge.left_node.uuid == point.node.uuid }
@@ -21,7 +22,7 @@ module MetaStruct::Graph::Point::TreeFactory
         point.adjacencies = adjacencies_for(point, right_edges, wrrapped_points)
       end
 
-      wrrapped_points.first
+      wrrapped_points.detect { |point| point.node == root_node }
     end
 
     private
@@ -46,6 +47,7 @@ module MetaStruct::Graph::Point::TreeFactory
 
     # @param nodes [MetaStruct::Graph::Point]
     # @param edges [Array<MetaStruct::Graph::Edge>]
+    # @param edges [Array<MetaStruct::Graph::Point>]
     # @return [Array<MetaStruct::Graph::Point::Adjacency>]
     #
     # @api private

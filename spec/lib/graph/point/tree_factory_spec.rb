@@ -33,7 +33,7 @@ RSpec.describe MetaStruct::Graph::Point::TreeFactory do
     )
   end
 
-  let(:nodes) { [root, child_for_root, another_child_for_root, child_for_child_for_root] }
+  let(:nodes) { [child_for_root, root, another_child_for_root, child_for_child_for_root] }
   let(:edges) { [edge_for_root, another_edge_for_root, edge_for_child_for_child_for_root] }
 
   it 'returns point with correct adjacencies' do
