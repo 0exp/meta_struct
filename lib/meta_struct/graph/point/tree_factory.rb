@@ -27,22 +27,50 @@ module MetaStruct::Graph::Point::TreeFactory
 
     private
 
+    # @param nodes [Array<MetaStruct::Graph::Node>]
+    # @param edges [Array<MetaStruct::Graph::Edge>]
+    # @return [MetaStruct::Graph::Node]
+    #
+    # @api private
+    # @since 0.1.0
     def find_root(nodes, edges)
       (nodes - find_bounds(nodes, edges)).first
     end
 
+    # @param nodes [Array<MetaStruct::Graph::Node>]
+    # @param edges [Array<MetaStruct::Graph::Edge>]
+    # @return [Array<MetaStruct::Graph::Node>]
+    #
+    # @api private
+    # @since 0.1.0
     def find_bounds(nodes, edges)
       nodes.select { |node| edges.any? { |edge| edge.right_node == node } }
     end
     
+    # @param nodes [Array<MetaStruct::Graph::Node>]
+    # @return [Array<MetaStruct::Graph::Point>]
+    #
+    # @api private
+    # @since 0.1.0
     def wrap_to_points(nodes)
       nodes.map { |node| { "#{node.uuid}" => build_point_for(node) } }
     end
 
+    # @param nodes [MetaStruct::Graph::Node]
+    # @return [MetaStruct::Graph::Point]
+    #
+    # @api private
+    # @since 0.1.0
     def build_point_for(node)
       MetaStruct::Graph::Point::Factory.build(node)
     end
 
+    # @param nodes [MetaStruct::Graph::Point]
+    # @param edges [Array<MetaStruct::Graph::Edge>]
+    # @return [Array<MetaStruct::Graph::Point::Adjacency>]
+    #
+    # @api private
+    # @since 0.1.0
     def adjacencies_for(point, right_edges)
       right_edges.map do |edge|
         MetaStruct::Graph::Point::Adjacency.new(
