@@ -17,7 +17,7 @@ class MetaStruct::Graph::Point
   #
   # @api private
   # @since 0.1.0
-  attr_reader :adjacencies
+  attr_accessor :adjacencies
 
   # @param node [MetaStruct::Graph::Node]
   # @param adjacencies [Array<MetaStruct::Graph::Point>]
