@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe MetaStruct::Graph::Point::TreeFactory do
-  subject { described_class.create(nodes, edges) }
+  subject(:build_tree) { described_class.create(nodes, edges) }
+
+  def adjacencie_right_nodes(point)
+    right_points = point.adjacencies.map(&:right_point)
+
+    right_points.map(&:node)
+  end
 
   let(:root) { MetaStruct::Graph::Node.create }
   let(:child_for_root) { MetaStruct::Graph::Node.create }
@@ -31,7 +37,14 @@ RSpec.describe MetaStruct::Graph::Point::TreeFactory do
   let(:edges) { [edge_for_root, another_edge_for_root, edge_for_child_for_child_for_root] }
 
   it 'returns point with correct adjacencies' do
-    subject
-    # binding.pry
+    aggregate_failures "point's adjacencies" do
+      expect(build_tree.node).to eq(root) 
+      expect(adjacencie_right_nodes(build_tree)).to match_array([child_for_root, another_child_for_root])
+
+      child_right_nodes = build_tree.adjacencies.map do |adjacency|
+        adjacencie_right_nodes(adjacency.right_point)
+      end
+      expect(child_right_nodes).to match_array([[child_for_child_for_root], []])
+    end
   end
 end

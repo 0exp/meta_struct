@@ -18,7 +18,7 @@ module MetaStruct::Graph::Point::TreeFactory
 
         next unless right_edges.any?
         
-        point.adjacencies = adjacencies_for(point, right_edges)
+        point.adjacencies = adjacencies_for(point, right_edges, wrrapped_points)
       end
 
       wrrapped_points.first
@@ -50,12 +50,11 @@ module MetaStruct::Graph::Point::TreeFactory
     #
     # @api private
     # @since 0.1.0
-    def adjacencies_for(point, right_edges)
+    def adjacencies_for(point, right_edges, points)
       right_edges.map do |edge|
-        MetaStruct::Graph::Point::Adjacency.new(
-          point,
-          build_point_for(edge.right_node)
-        )
+        right_point = points.detect { |point| point.node == edge.right_node }
+
+        MetaStruct::Graph::Point::Adjacency.new(point, right_point)
       end
     end
   end
