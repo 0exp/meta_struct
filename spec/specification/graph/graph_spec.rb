@@ -21,9 +21,13 @@ RSpec.describe MetaStruct::Graph do
             MetaStruct::Graph.create(nodes: [], edges: edge_list)
           end.to raise_error(MetaStruct::Graph::EmptyNodeListError)
 
-          expect do # empty edgees
+          expect do # empty edges
             MetaStruct::Graph.create(nodes: node_list, edges: [])
           end.to raise_error(MetaStruct::Graph::EmptyEdgeListError)
+
+          expect do # empty edges
+            MetaStruct::Graph.create(nodes: [], edges: [])
+          end.not_to raise_error(MetaStruct::Graph::EmptyEdgeListError)
 
           expect do # no any lists are provided
             MetaStruct::Graph.create
