@@ -7,6 +7,12 @@ class MetaStruct::Graph
   # @since 0.1.0
   Error = Class.new(MetaStruct::Error)
 
+  # @return [Class<MetaStruct::GraphCycledEror>]
+  #
+  # @api public
+  # @since 0.1.0
+  GraphCycledEror = Class.new(Error)
+
   # @return [Class<MetaStruct::ArgumentError>]
   #
   # @api public
