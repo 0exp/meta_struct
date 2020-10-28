@@ -5,6 +5,7 @@
 class MetaStruct::Graph::Node
   require_relative 'node/uuid_generator'
   require_relative 'node/factory'
+  require_relative 'node/serializer'
 
   class << self
     # @option uuid [String, nil]

@@ -8,6 +8,7 @@ require 'smart_core/injection'
 # @since 0.1.0
 module MetaStruct
   require_relative 'meta_struct/version'
+  require_relative 'meta_struct/di_container'
   require_relative 'meta_struct/errors'
   require_relative 'meta_struct/graph'
 end

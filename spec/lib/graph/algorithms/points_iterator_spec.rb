@@ -40,6 +40,7 @@ RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
 
   specify { expect(iterator).to respond_to(:each) }
 
+  # TODO: add named contexts to be more specific
   describe '#collection' do
     subject { iterator.collection.map(&:node) }
 
