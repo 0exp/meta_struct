@@ -54,8 +54,8 @@ module MetaStruct::Graph::Algorithms
           if right_point.adjacencies.any?
             stack.push(right_point)
           else
-            break
             stack = []
+            break
           end
         end
       end
