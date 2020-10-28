@@ -40,13 +40,14 @@ RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
 
   specify { expect(iterator).to respond_to(:each) }
 
-  # TODO: add named contexts to be more specific
   describe '#collection' do
     subject { iterator.collection.map(&:node) }
 
-    let(:expected_result) { [root, another_child_for_root] }
+    context 'following regarding weight sorting' do
+      let(:expected_result) { [root, another_child_for_root] }
 
-    it { is_expected.to match_array(expected_result) }
+      it { is_expected.to match_array(expected_result) }
+    end
 
     context 'when starting from specific node' do
       let(:node_uuid) { child_for_root.uuid }
