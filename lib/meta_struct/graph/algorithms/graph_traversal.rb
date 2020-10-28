@@ -13,6 +13,16 @@ module MetaStruct::Graph::Algorithms::GraphTraversal
     #
     # @api private
     # @since 0.1.0
-    def traverse(graph, &iterator); end
+    def traverse(graph, uuid = nil, &iterator)
+      points_iterator(graph, uuid).each do |point|
+        break unless iterator.yield(point)
+      end
+    end
+
+    private
+
+    def points_iterator(graph, uuid)
+      MetaStruct::Graph::Algorithms::PointsIterator.new(graph, uuid)
+    end
   end
 end

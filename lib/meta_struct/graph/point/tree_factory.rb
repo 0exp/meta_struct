@@ -56,7 +56,7 @@ module MetaStruct::Graph::Point::TreeFactory
       right_edges.map do |edge|
         right_point = points.detect { |point| point.node == edge.right_node }
 
-        MetaStruct::Graph::Point::Adjacency.new(point, right_point)
+        MetaStruct::Graph::Point::Adjacency.new(point, right_point, edge)
       end
     end
   end
