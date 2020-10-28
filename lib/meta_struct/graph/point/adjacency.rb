@@ -15,14 +15,22 @@ class MetaStruct::Graph::Point::Adjacency
   # @since 0.1.0
   attr_reader :right_point
 
+  # @return [MetaStruct::Graph::Edge]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :edge
+
   # @param left_point [MetaStruct::Graph::Point]
   # @param right_point [MetaStruct::Graph::Point]
+  # @param edge [MetaStruct::Graph::Edge]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(left_point, right_point)
+  def initialize(left_point, right_point, edge)
     @left_point = left_point
     @right_point = right_point
+    @edge = edge
   end
 end
