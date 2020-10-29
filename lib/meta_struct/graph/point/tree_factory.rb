@@ -33,7 +33,7 @@ module MetaStruct::Graph::Point::TreeFactory
     # @api private
     # @since 0.1.0
     def wrap_to_points(nodes)
-      nodes.map(&method(:build_point_for))
+      nodes.map { |node| build_point_for(node) }
     end
 
     # @param nodes [MetaStruct::Graph::Node]

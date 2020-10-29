@@ -76,7 +76,7 @@ module MetaStruct
     # @api private
     # @since 0.1.0
     def serialize_nodes
-      nodes.map(&method(:serialize_node))
+      nodes.map { |node| serialize_node(node) }
     end
 
     # @return [Array<Hash>]
@@ -84,7 +84,7 @@ module MetaStruct
     # @api private
     # @since 0.1.0
     def serialize_edges
-      edges.map(&method(:serialize_edge))
+      edges.map { |edge| serialize_edge(edge) }
     end
   end
 end
