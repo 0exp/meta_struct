@@ -3,6 +3,7 @@
 # @api public
 # @since 0.1.0
 class MetaStruct::Graph::Edge::Serializer
+  # @since 0.1.0
   extend Forwardable
 
   # @since 0.1.0
@@ -11,6 +12,11 @@ class MetaStruct::Graph::Edge::Serializer
   # @since 0.1.0
   import({ node_serializer: 'nodes.serializer' }, bind: :dynamic, access: :private)
 
+  # @param edge [MetaStruct::Graph::Edge]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
   def initialize(edge)
     @edge = edge
   end
@@ -37,10 +43,21 @@ class MetaStruct::Graph::Edge::Serializer
 
   private
 
+  # @return [MetaStruct::Graph::Edge]
+  #
+  # @api private
+  # @since 0.1.0
   attr_reader :edge
 
+  # @api private
+  # @since 0.1.0
   def_delegators :edge, :left_node, :labels, :right_node, :properties, :weight
 
+  # @param node [MetaStruct::Graph::Node]
+  # @return [Hash]
+  #
+  # @api private
+  # @since 0.1.0
   def serialize_node(node)
     node_serializer.new(node).call
   end

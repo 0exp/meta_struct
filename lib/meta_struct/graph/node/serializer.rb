@@ -3,8 +3,14 @@
 # @api public
 # @since 0.1.0
 class MetaStruct::Graph::Node::Serializer
+  # @since 0.1.0
   extend Forwardable
 
+  # @param node [MetaStruct::Graph::Node]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
   def initialize(node)
     @node = node
   end
@@ -29,7 +35,13 @@ class MetaStruct::Graph::Node::Serializer
 
   private
 
+  # @return [MetaStruct::Graph::Node]
+  #
+  # @api private
+  # @since 0.1.0
   attr_reader :node
 
+  # @api private
+  # @since 0.1.0
   def_delegators :node, :uuid, :labels, :properties
 end
