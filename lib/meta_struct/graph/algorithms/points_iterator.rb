@@ -42,13 +42,13 @@ module MetaStruct::Graph::Algorithms
       flow = [point]
       stack = [point]
 
-      while stack.any? do
+      while stack.any?
         current = stack.pop
         adjacencies = sorted_adjacencies(current.adjacencies)
 
         adjacencies.each do |adjacency|
           right_point = adjacency.right_point
-          
+
           flow.push(right_point)
 
           if right_point.adjacencies.any?
@@ -76,4 +76,3 @@ module MetaStruct::Graph::Algorithms
     end
   end
 end
-

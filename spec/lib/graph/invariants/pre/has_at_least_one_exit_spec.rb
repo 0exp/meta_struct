@@ -6,11 +6,12 @@ RSpec.describe MetaStruct::Graph::Invariants::Pre::HasAtLeastOneExit do
   let(:nodes) { [] }
   let(:edges) { [] }
 
-  it { is_expected.to \
-    raise_error(
-      MetaStruct::Graph::NoExitNodeInvariantError, 
-      'Your graph has no exit nodes (you should provide at least one exit node).'
-    ) 
+  it {
+    expect(subject).to \
+      raise_error(
+        MetaStruct::Graph::NoExitNodeInvariantError,
+        'Your graph has no exit nodes (you should provide at least one exit node).'
+      )
   }
 
   context 'when root and bound the same' do
@@ -22,11 +23,12 @@ RSpec.describe MetaStruct::Graph::Invariants::Pre::HasAtLeastOneExit do
       )
     end
 
-    it { is_expected.to \
-      raise_error(
-        MetaStruct::Graph::NoExitNodeInvariantError, 
-        'Your graph has no exit nodes (you should provide at least one exit node).'
-      ) 
+    it {
+      expect(subject).to \
+        raise_error(
+          MetaStruct::Graph::NoExitNodeInvariantError,
+          'Your graph has no exit nodes (you should provide at least one exit node).'
+        )
     }
   end
 

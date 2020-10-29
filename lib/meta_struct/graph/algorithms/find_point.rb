@@ -19,7 +19,7 @@ module MetaStruct::Graph::Algorithms::FindPoint
 
       stack = [root]
 
-      while stack.any? do
+      while stack.any?
         current = stack.pop
 
         current.adjacencies.each do |adjacency|

@@ -25,3 +25,6 @@ Style/MultipleComparison:
 # NOTE: for domain logic clarity
 Style/ZeroLengthPredicate:
   Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false

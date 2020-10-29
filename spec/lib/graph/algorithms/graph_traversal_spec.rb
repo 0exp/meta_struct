@@ -8,7 +8,7 @@ RSpec.describe MetaStruct::Graph::Algorithms::GraphTraversal do
   let(:point_1) { MetaStruct::Graph::Point.new(node_1, []) }
   let(:point_2) { MetaStruct::Graph::Point.new(node_2, []) }
   let(:point_3) { MetaStruct::Graph::Point.new(node_3, []) }
-  
+
   let(:points) { [point_1, point_2, point_3] }
 
   before do
@@ -20,7 +20,7 @@ RSpec.describe MetaStruct::Graph::Algorithms::GraphTraversal do
 
     described_class.traverse(nil) do |point|
       iterated_points.push(point)
-      
+
       point.node.uuid != 'uuid-2'
     end
 

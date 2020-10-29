@@ -18,7 +18,7 @@ module MetaStruct::Graph::Point::TreeFactory
         right_edges = edges.select { |edge| edge.left_node.uuid == point.node.uuid }
 
         next unless right_edges.any?
-        
+
         point.adjacencies = adjacencies_for(point, right_edges, wrrapped_points)
       end
 
@@ -26,7 +26,7 @@ module MetaStruct::Graph::Point::TreeFactory
     end
 
     private
-    
+
     # @param nodes [Array<MetaStruct::Graph::Node>]
     # @return [Array<MetaStruct::Graph::Point>]
     #
@@ -54,7 +54,7 @@ module MetaStruct::Graph::Point::TreeFactory
     # @since 0.1.0
     def adjacencies_for(point, right_edges, points)
       right_edges.map do |edge|
-        right_point = points.detect { |point| point.node == edge.right_node }
+        right_point = points.detect { |r_point| r_point.node == edge.right_node }
 
         MetaStruct::Graph::Point::Adjacency.new(point, right_point, edge)
       end

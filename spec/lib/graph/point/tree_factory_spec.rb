@@ -38,8 +38,9 @@ RSpec.describe MetaStruct::Graph::Point::TreeFactory do
 
   it 'returns point with correct adjacencies' do
     aggregate_failures "point's adjacencies" do
-      expect(build_tree.node).to eq(root) 
-      expect(adjacencie_right_nodes(build_tree)).to match_array([child_for_root, another_child_for_root])
+      expect(build_tree.node).to eq(root)
+      expect(adjacencie_right_nodes(build_tree)).to match_array([child_for_root,
+                                                                 another_child_for_root])
 
       child_right_nodes = build_tree.adjacencies.map do |adjacency|
         adjacencie_right_nodes(adjacency.right_point)
