@@ -49,22 +49,8 @@ RSpec.describe MetaStruct::Graph::Serializer do
       ],
       edges: [
         {
-          left_node: {
-            uuid: 'super-cool-uuid',
-            labels: %w[array of labels],
-            properties: {
-              'prop_1' => 'cool',
-              'prop_2' => 'very'
-            }
-          },
-          right_node: {
-            uuid: 'super-cool-uuid',
-            labels: %w[array of labels],
-            properties: {
-              'prop_1' => 'cool',
-              'prop_2' => 'very'
-            }
-          },
+          left_node: 'super-cool-uuid',
+          right_node: 'super-cool-uuid',
           labels: %w[array of labels],
           properties: {
             'prop_1' => 'cool',

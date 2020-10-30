@@ -12,7 +12,6 @@ module MetaStruct
 
     # @since 0.1.0
     import({ node_serializer: 'nodes.serializer' }, bind: :dynamic, access: :private)
-    import({ edge_serializer: 'edges.serializer' }, bind: :dynamic, access: :private)
 
     # @param graph [MetaStruct::Graph]
     # @return [void]
@@ -68,7 +67,13 @@ module MetaStruct
     # @api private
     # @since 0.1.0
     def serialize_edge(edge)
-      edge_serializer.new(edge).call
+      {
+        left_node: edge.left_node.uuid,
+        right_node: edge.right_node.uuid,
+        labels: edge.labels,
+        properties: edge.properties,
+        weight: edge.weight
+      }
     end
 
     # @return [Array<Hash>]

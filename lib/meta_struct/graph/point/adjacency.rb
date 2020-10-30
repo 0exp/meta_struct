@@ -33,4 +33,12 @@ class MetaStruct::Graph::Point::Adjacency
     @right_point = right_point
     @edge = edge
   end
+
+  # @return [Integer]
+  #
+  # @api public
+  # @since 0.1.0
+  def weight
+    edge.weight
+  end
 end

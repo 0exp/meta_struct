@@ -60,8 +60,8 @@ class MetaStruct::Graph
   #
   # @api public
   # @since 0.1.0
-  def find_node(node_uuid)
-    Algorithms::FindNode.call(self, node_uuid)
+  def find_point(node_uuid)
+    Algorithms::FindPoint.call(self, node_uuid)
   end
 
   # @param iterator [Block]
