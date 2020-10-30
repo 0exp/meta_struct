@@ -6,7 +6,9 @@ RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
   let(:root) { MetaStruct::Graph::Node.create(labels: ['root']) }
   let(:child_for_root) { MetaStruct::Graph::Node.create(labels: ['first level weight 1']) }
   let(:another_child_for_root) { MetaStruct::Graph::Node.create(labels: ['first level weight 2']) }
-  let(:child_for_child_for_root) { MetaStruct::Graph::Node.create(labels: ['second level weight -1']) }
+  let(:child_for_child_for_root) do
+    MetaStruct::Graph::Node.create(labels: ['second level weight -1'])
+  end
 
   let(:edge_for_root) do
     MetaStruct::Graph::Edge.create(
@@ -43,9 +45,11 @@ RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
   describe '#collection' do
     subject { iterator.collection.map(&:node) }
 
-    let(:expected_result) { [root, another_child_for_root] }
+    context 'following regarding weight sorting' do
+      let(:expected_result) { [root, another_child_for_root] }
 
-    it { is_expected.to match_array(expected_result) }
+      it { is_expected.to match_array(expected_result) }
+    end
 
     context 'when starting from specific node' do
       let(:node_uuid) { child_for_root.uuid }

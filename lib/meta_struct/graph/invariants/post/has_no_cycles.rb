@@ -15,7 +15,7 @@ module MetaStruct::Graph::Invariants::Post::HasNoCycles
       visited = [root]
 
       scan(cycled_nodes, visited, root, true)
-      
+
       if cycled_nodes.any?
         raise(
           MetaStruct::Graph::GraphCycledEror,
@@ -29,7 +29,7 @@ module MetaStruct::Graph::Invariants::Post::HasNoCycles
     def scan(cycled_nodes, visited, point, reset_visited = false)
       point.adjacencies.each do |adjacency|
         right_point = adjacency.right_point
-        
+
         if visited.include?(right_point)
           cycled_nodes.push(right_point.node)
           break

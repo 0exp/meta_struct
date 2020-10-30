@@ -15,15 +15,16 @@ RSpec.describe MetaStruct::Graph::Invariants::Pre::HasNoNonconnectedNodes do
     let(:nodes) { [root_1, root_2] }
 
     let(:expected_message) do
-      "Some nodes has no edges (all nodes should have edges). " + 
-      "Non-connected node UUIDs: #{nodes.map(&:uuid).join(', ')}."
+      "Some nodes has no edges (all nodes should have edges). " \
+        "Non-connected node UUIDs: #{nodes.map(&:uuid).join(', ')}."
     end
 
-    it { is_expected.to \
-      raise_error(
-        MetaStruct::Graph::NonConnectedNodeInvariantError, 
-        expected_message
-      ) 
+    it {
+      expect(subject).to \
+        raise_error(
+          MetaStruct::Graph::NonConnectedNodeInvariantError,
+          expected_message
+        )
     }
   end
 end

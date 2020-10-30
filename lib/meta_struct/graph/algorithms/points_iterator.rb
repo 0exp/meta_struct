@@ -19,6 +19,8 @@ module MetaStruct::Graph::Algorithms
       @uuid = uuid
     end
 
+    # @api private
+    # @since 0.1.0
     def each(&block)
       collection.each(&block)
     end
@@ -33,22 +35,33 @@ module MetaStruct::Graph::Algorithms
 
     private
 
+    # @api private
+    # @since 0.1.0
     attr_reader :graph
+
+    # @api private
+    # @since 0.1.0
     attr_reader :uuid
 
+    # @api private
+    # @since 0.1.0
     def_delegators :graph, :root
 
+    # @return [Array<MetaStruct::Graph::Point>]
+    #
+    # @api private
+    # @since 0.1.0
     def dfs(point)
       flow = [point]
       stack = [point]
 
-      while stack.any? do
+      while stack.any?
         current = stack.pop
         adjacencies = sorted_adjacencies(current.adjacencies)
 
         adjacencies.each do |adjacency|
           right_point = adjacency.right_point
-          
+
           flow.push(right_point)
 
           if right_point.adjacencies.any?
@@ -63,17 +76,25 @@ module MetaStruct::Graph::Algorithms
       flow
     end
 
+    # @return [MetaStruct::Graph::Point]
+    #
+    # @api private
+    # @since 0.1.0
     def start_point
       return root unless uuid && !uuid.empty?
 
-      MetaStruct::Graph::Algorithms::FindPoint.call(graph, uuid)
+      graph.find_point(uuid)
     end
 
+    # @param adjacencies [Array<MetaStruct::Graph::Point::Adjacency>]
+    # @return [Array<MetaStruct::Graph::Point::Adjacency>]
+    #
+    # @api private
+    # @since 0.1.0
     def sorted_adjacencies(adjacencies = [])
       adjacencies.sort do |left, right|
-        right.edge.weight <=> left.edge.weight
+        right.weight <=> left.weight
       end
     end
   end
 end
-

@@ -10,6 +10,7 @@ class MetaStruct::Graph
   require_relative 'graph/invariants'
   require_relative 'graph/factory'
   require_relative 'graph/algorithms'
+  require_relative 'graph/serializer'
 
   class << self
     # @option nodes [Array<MetaStruct::Graph::Node>]
@@ -29,6 +30,18 @@ class MetaStruct::Graph
   # @since 0.1.0
   attr_reader :root
 
+  # @return [Array<MetaStruct::Graph::Node>]
+  #
+  # @api public
+  # @since 0.1.0
+  attr_reader :nodes
+
+  # @return [Array<MetaStruct::Graph::Edge>]
+  #
+  # @api public
+  # @since 0.1.0
+  attr_reader :edges
+
   # @param root [MetaStruct::Graph::Point]
   # @param nodes [Array<MetaStruct::Graph::Node>]
   # @param edges [Array<MetaStruct::Graph::Edge>]
@@ -47,8 +60,8 @@ class MetaStruct::Graph
   #
   # @api public
   # @since 0.1.0
-  def find_node(node_uuid)
-    Algorithms::FindNode.call(self, node_uuid)
+  def find_point(node_uuid)
+    Algorithms::FindPoint.call(self, node_uuid)
   end
 
   # @param iterator [Block]

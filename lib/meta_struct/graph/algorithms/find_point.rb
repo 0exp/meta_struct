@@ -15,17 +15,17 @@ module MetaStruct::Graph::Algorithms::FindPoint
       root = graph.root
 
       return unless node_uuid && !node_uuid.empty?
-      return root if root.node.uuid == node_uuid
+      return root if root.uuid == node_uuid
 
       stack = [root]
 
-      while stack.any? do
+      while stack.any?
         current = stack.pop
 
         current.adjacencies.each do |adjacency|
           right_point = adjacency.right_point
 
-          if right_point.node.uuid == node_uuid
+          if right_point.uuid == node_uuid
             point = right_point
             stack = []
           else

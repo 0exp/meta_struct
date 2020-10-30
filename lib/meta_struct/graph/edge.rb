@@ -4,6 +4,7 @@
 # @since 0.1.0
 class MetaStruct::Graph::Edge
   require_relative 'edge/factory'
+  require_relative 'edge/serializer'
 
   class << self
     # @option left_node [MetaStruct::Graph::Node]

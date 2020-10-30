@@ -6,11 +6,12 @@ RSpec.describe MetaStruct::Graph::Invariants::Pre::HasOnlyOneRoot do
   let(:nodes) { [] }
   let(:edges) { [] }
 
-  it { is_expected.to \
-    raise_error(
-      MetaStruct::Graph::RootNotFoundInvariantError, 
-      'Your graph has no root node.'
-    ) 
+  it {
+    expect(subject).to \
+      raise_error(
+        MetaStruct::Graph::RootNotFoundInvariantError,
+        'Your graph has no root node.'
+      )
   }
 
   context 'when several roots' do
@@ -47,15 +48,16 @@ RSpec.describe MetaStruct::Graph::Invariants::Pre::HasOnlyOneRoot do
     end
 
     let(:expected_message) do
-      "Your graph has more than one root (you can have only one root in graph entity). " + 
-      "Root node UUIDs: #{[root_1, root_2].map(&:uuid).join(', ')}."
+      "Your graph has more than one root (you can have only one root in graph entity). " \
+        "Root node UUIDs: #{[root_1, root_2].map(&:uuid).join(', ')}."
     end
 
-    it { is_expected.to \
-      raise_error(
-        MetaStruct::Graph::MoreThanOneRootInvariantError, 
-        expected_message
-      ) 
+    it {
+      expect(subject).to \
+        raise_error(
+          MetaStruct::Graph::MoreThanOneRootInvariantError,
+          expected_message
+        )
     }
   end
 end

@@ -8,7 +8,7 @@ module MetaStruct::Graph::Algorithms::FindRootNodes
     # @param edges [Array<MetaStruct::Graph::Edge>]
     # @return [Array<MetaStruct::Graph::Node>]
     #
-    # @api private
+    # @api public
     # @since 0.1.0
     def call(nodes, edges)
       nodes - find_bounds(nodes, edges)
