@@ -229,7 +229,7 @@ RSpec.describe MetaStruct::Graph do
             )
           end.to raise_error(
             MetaStruct::Graph::GraphHasCyclesInvariantError,
-            "Your graph has a cycle on 'n2' node."
+            "Your graph has a cycle on a node with UUID 'n2'"
           )
         end
       end
