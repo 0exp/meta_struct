@@ -39,7 +39,7 @@ module MetaStruct::Graph::Invariants::Post
       def check_for_cycles!(graph, point, tracker)
         tracker.each_pair do |point, traverse_count|
           raise(MetaStruct::Graph::GraphHasCyclesInvariantError.new(
-            "Yoru graph has a cycle on '#{point.uuid}' node.",
+            "Your graph has a cycle on '#{point.uuid}' node.",
             graph: graph, cycled_points: [point]
           )) unless traverse_count < CYCLE_FACTOR
         end

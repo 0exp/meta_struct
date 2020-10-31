@@ -212,22 +212,25 @@ RSpec.describe MetaStruct::Graph do
           end.not_to raise_error
 
           expect do # has cycles - bad
-            # NOTE: graph: (1->2),(2->3),(3->4),(4->5),(4->2); cycle: 4->2
+            # NOTE: graph: (1->2),(2->3),(3->4),(4->5),(4->2); cycle: 2->...->4->2
             node_1 = MetaStruct::Graph::Node.create(uuid: 'n1')
             node_2 = MetaStruct::Graph::Node.create(uuid: 'n2')
             node_3 = MetaStruct::Graph::Node.create(uuid: 'n3')
-            node_4 = MetaStruct::Graph::Node.create(uuid: 'n4')
+            node_4 = MetaStruct::Graph::Node.create(uuid: 'n4') # cycled node
 
             edge_1 = MetaStruct::Graph::Edge.create(left_node: node_1, right_node: node_2)
             edge_2 = MetaStruct::Graph::Edge.create(left_node: node_2, right_node: node_3)
             edge_3 = MetaStruct::Graph::Edge.create(left_node: node_2, right_node: node_4)
-            edge_4 = MetaStruct::Graph::Edge.create(left_node: node_4, right_node: node_2)
+            edge_4 = MetaStruct::Graph::Edge.create(left_node: node_4, right_node: node_2) # cycle
 
             MetaStruct::Graph.create(
               nodes: [node_1, node_2, node_3, node_4],
               edges: [edge_1, edge_2, edge_3, edge_4]
             )
-          end.to raise_error(MetaStruct::Graph::GraphHasCyclesInvariantError)
+          end.to raise_error(
+            MetaStruct::Graph::GraphHasCyclesInvariantError,
+            "Your graph has a cycle on 'n2' node."
+          )
         end
       end
     end
