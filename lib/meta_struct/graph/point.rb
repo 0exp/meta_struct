@@ -44,6 +44,6 @@ class MetaStruct::Graph::Point
   # @api public
   # @since 0.1.0
   def adjacencies
-    __adjacencies__.sort(&:weight)
+    __adjacencies__.sort_by(&:weight)
   end
 end

@@ -162,4 +162,34 @@ class MetaStruct::Graph
   # @api public
   # @since 0.1.0
   NoExitNodeInvariantError = Class.new(InvariantError)
+
+  # @return [Class<MetaStruct::Graph::InvariantError>]
+  #
+  # @api public
+  # @since 0.1.0
+  class GraphHasCyclesInvariantError < InvariantError
+    # @return [MetaStruct::Graph]
+    #
+    # @api public
+    # @since 0.1.0
+    attr_reader :graph
+
+    # @return [Array<MetaStruct:Graph::Point>]
+    #
+    # @api public
+    # @since 0.1.0
+    attr_reader :cycled_points
+
+    # @param message [String]
+    # @option graph [MetaStruct::Graph]
+    # @option cycled_points [Array<MetaStruct:Graph::Point>]
+    # @return [void]
+    #
+    # @api private
+    # @since 0.1.0
+    def initialize(message, graph:, cycled_points:)
+      super(message)
+      @cycled_points = cycled_points
+    end
+  end
 end

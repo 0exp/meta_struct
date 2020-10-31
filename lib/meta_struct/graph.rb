@@ -57,6 +57,15 @@ class MetaStruct::Graph
   # @api public
   # @since 0.1.0
   def traverse(&iterator)
-    Algorithms::GraphTraversal.traverse(self, &iterator)
+    Algorithms::DirectedTraversal.traverse(self, &iterator)
+  end
+
+  # @param iterator [Block]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def deep_traverse(&iterator)
+    Algorithms::DeepFirstSearch.traverse(self, &iterator)
   end
 end

@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module MetaStruct::Graph::Algorithms::GraphTraversal
+module MetaStruct::Graph::Algorithms::DirectedTraversal
   class << self
     # @param graph [MetaStruct::Graph]
     # @param iterator [Block]
