@@ -17,17 +17,16 @@ class MetaStruct::Graph::Point
   #
   # @api private
   # @since 0.1.0
-  attr_reader :adjacencies
+  attr_reader :__adjacencies__
 
   # @param node [MetaStruct::Graph::Node]
-  # @param adjacencies [Array<MetaStruct::Graph::Point>]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(node, adjacencies)
+  def initialize(node)
     @node = node
-    @adjacencies = adjacencies
+    @__adjacencies__ = []
   end
 
   # @return [String]
@@ -36,5 +35,15 @@ class MetaStruct::Graph::Point
   # @since 0.1.0
   def uuid
     node.uuid
+  end
+
+  # A list of adjacencies sorted in ascending order.
+  #
+  # @return [Array<MetaStruct::Graph::Point>]
+  #
+  # @api public
+  # @since 0.1.0
+  def adjacencies
+    __adjacencies__.sort(&:weight)
   end
 end

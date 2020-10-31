@@ -10,6 +10,18 @@ module MetaStruct::Graph::Point::Factory
     #
     # @api private
     # @since 0.1.0
-    def create(node, edges); end
+    def create(node)
+      MetaStruct::Graph::Point.new(node)
+    end
+
+    # @param point [MetaStruct::Graph::Point]
+    # @param adjacencies [Array<MetaStruct::Graph::Point::Adjacency>]
+    # @return [void]
+    #
+    # @api private
+    # @since 0.1.0
+    def append_adjacencies(point, adjacencies)
+      point.__adjacencies__.concat(adjacencies)
+    end
   end
 end

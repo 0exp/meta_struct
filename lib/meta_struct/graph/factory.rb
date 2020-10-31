@@ -24,10 +24,10 @@ module MetaStruct::Graph::Factory
     # @since 0.1.0
     def create(nodes: NO_NODES, edges: NO_EDGES)
       validate_attributes(nodes, edges)
-      validate_graph_preinvariants(nodes, edges)
+      validate_graph_pre_invariants(nodes, edges)
       point_tree = build_point_tree(nodes, edges)
       graph = create_graph(point_tree, nodes, edges)
-      graph.tap { validate_graph_postinvariants(graph) }
+      graph.tap { validate_graph_post_invariants(graph) }
     end
 
     private
@@ -94,7 +94,7 @@ module MetaStruct::Graph::Factory
     #
     # @api private
     # @since 0.1.0
-    def validate_graph_preinvariants(nodes, edges)
+    def validate_graph_pre_invariants(nodes, edges)
       MetaStruct::Graph::Invariants::Pre::All.validate!(nodes, edges)
     end
 
@@ -120,9 +120,9 @@ module MetaStruct::Graph::Factory
     # @param graph [MetaStruct::Graph]
     # @return [void]
     #
-    # @api priate
+    # @api private
     # @since 0.1.0
-    def validate_graph_postinvariants(graph)
+    def validate_graph_post_invariants(graph)
       MetaStruct::Graph::Invariants::Post::All.validate!(graph)
     end
   end
