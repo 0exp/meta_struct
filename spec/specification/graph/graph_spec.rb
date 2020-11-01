@@ -211,6 +211,27 @@ RSpec.describe MetaStruct::Graph do
             )
           end.not_to raise_error
 
+          expect do # has no cycles but some nodes has two incomings - good
+            # NOTE: graph: (1->2),(2->3),(2->4),(4->5),(3->5) (5 has two incoming nodes)
+            node_1 = MetaStruct::Graph::Node.create(uuid: 'n1')
+            node_2 = MetaStruct::Graph::Node.create(uuid: 'n2')
+            node_3 = MetaStruct::Graph::Node.create(uuid: 'n3')
+            node_4 = MetaStruct::Graph::Node.create(uuid: 'n4')
+            node_4 = MetaStruct::Graph::Node.create(uuid: 'n4')
+            node_5 = MetaStruct::Graph::Node.create(uuid: 'n5')
+
+            edge_1 = MetaStruct::Graph::Edge.create(left_node: node_1, right_node: node_2)
+            edge_2 = MetaStruct::Graph::Edge.create(left_node: node_2, right_node: node_3)
+            edge_3 = MetaStruct::Graph::Edge.create(left_node: node_2, right_node: node_4)
+            edge_4 = MetaStruct::Graph::Edge.create(left_node: node_4, right_node: node_5)
+            edge_5 = MetaStruct::Graph::Edge.create(left_node: node_3, right_node: node_5)
+
+            MetaStruct::Graph.create(
+              nodes: [node_1, node_2, node_3, node_4, node_5],
+              edges: [edge_1, edge_2, edge_3, edge_4, edge_5]
+            )
+          end.not_to raise_error
+
           expected_cycled_node = nil
 
           expect do # has cycles - bad
