@@ -211,12 +211,16 @@ RSpec.describe MetaStruct::Graph do
             )
           end.not_to raise_error
 
+          expected_cycled_node = nil
+
           expect do # has cycles - bad
             # NOTE: graph: (1->2),(2->3),(3->4),(4->5),(4->2); cycle: 2->...->4->2
             node_1 = MetaStruct::Graph::Node.create(uuid: 'n1')
-            node_2 = MetaStruct::Graph::Node.create(uuid: 'n2')
+            node_2 = MetaStruct::Graph::Node.create(uuid: 'n2') # cycled node
             node_3 = MetaStruct::Graph::Node.create(uuid: 'n3')
-            node_4 = MetaStruct::Graph::Node.create(uuid: 'n4') # cycled node
+            node_4 = MetaStruct::Graph::Node.create(uuid: 'n4')
+
+            expected_cycled_node = node_2
 
             edge_1 = MetaStruct::Graph::Edge.create(left_node: node_1, right_node: node_2)
             edge_2 = MetaStruct::Graph::Edge.create(left_node: node_2, right_node: node_3)
@@ -227,20 +231,16 @@ RSpec.describe MetaStruct::Graph do
               nodes: [node_1, node_2, node_3, node_4],
               edges: [edge_1, edge_2, edge_3, edge_4]
             )
-          end.to raise_error(
-            MetaStruct::Graph::GraphHasCyclesInvariantError,
-            "Your graph has a cycle on a node with UUID 'n2'"
-          )
+          end.to(raise_error) do |error| # error with cycled node data
+            expect(error).to be_a(MetaStruct::Graph::GraphHasCyclesInvariantError)
+            expect(error.message).to eq("Your graph has a cycle on a node with UUID 'n2'")
+            expect(error.graph).to be_a(MetaStruct::Graph)
+            expect(error.cycled_points).to contain_exactly(
+              have_attributes(node: expected_cycled_node)
+            )
+          end
         end
       end
-    end
-  end
-
-  describe 'traverse algorithms' do
-    describe 'directed traversal' do
-    end
-
-    describe 'deep traversal' do
     end
   end
 end

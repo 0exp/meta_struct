@@ -85,6 +85,12 @@ class MetaStruct::Graph
   # @since 0.1.0
   GraphError = Class.new(Error)
 
+  # @return [Class<Error>]
+  #
+  # @api public
+  # @since 0.1.0
+  PointNotFoundError = Class.new(Error)
+
   # @return [Class<MetaStruct::Graph::ArgumentError>]
   #
   # @api public
@@ -189,6 +195,7 @@ class MetaStruct::Graph
     # @since 0.1.0
     def initialize(message, graph:, cycled_points:)
       super(message)
+      @graph = graph
       @cycled_points = cycled_points
     end
   end

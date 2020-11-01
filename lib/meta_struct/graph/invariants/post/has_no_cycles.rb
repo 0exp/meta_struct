@@ -29,6 +29,10 @@ module MetaStruct::Graph::Invariants::Post
 
       private
 
+      # Cycle factors:
+      #   1. Has adjacencies (to another points);
+      #   2. Traversed more than one time.
+      #
       # @param graph [MetaStruct::Graph]
       # @param point [MetaStruct::Graph::Point]
       # @param tracker [MetaStruct::Graph::Invariants::Post::HasNoCycles::TraverseTracker]
@@ -37,11 +41,11 @@ module MetaStruct::Graph::Invariants::Post
       # @api private
       # @since 0.1.0
       def check_for_cycles!(graph, point, tracker)
-        tracker.each_pair do |point, traverse_count|
+        tracker.each_pair do |tracked_point, traverse_count|
           raise(MetaStruct::Graph::GraphHasCyclesInvariantError.new(
-            "Your graph has a cycle on a node with UUID '#{point.uuid}'",
-            graph: graph, cycled_points: [point]
-          )) unless traverse_count < CYCLE_FACTOR
+            "Your graph has a cycle on a node with UUID '#{tracked_point.uuid}'",
+            graph: graph, cycled_points: [tracked_point]
+          )) if traverse_count >= CYCLE_FACTOR and tracked_point.adjacencies.any?
         end
       end
     end

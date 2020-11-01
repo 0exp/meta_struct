@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module MetaStruct::Graph::Algorithms::DeepFirstSearch
+module MetaStruct::Graph::Algorithms::DeepTraversal
   class << self
     # @param graph [MetaStruct::Graph]
     # @param iterator [Block]

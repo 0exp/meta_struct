@@ -43,12 +43,21 @@ class MetaStruct::Graph
   end
 
   # @param node_uuid [String]
+  # @return [MetaStruct::Graph::Point, nil]
+  #
+  # @api public
+  # @since 0.1.0
+  def find(node_uuid)
+    Algorithms::FindNode.call(self, node_uuid)
+  end
+
+  # @param node_uuid [String]
   # @return [MetaStruct::Graph::Point]
   #
   # @api public
   # @since 0.1.0
-  def find_node(node_uuid)
-    Algorithms::FindNode.call(self, node_uuid)
+  def find!(node_uuid)
+    Algorithms::FindNode.call!(self, node_uuid)
   end
 
   # @param iterator [Block]
@@ -66,6 +75,6 @@ class MetaStruct::Graph
   # @api private
   # @since 0.1.0
   def deep_traverse(&iterator)
-    Algorithms::DeepFirstSearch.traverse(self, &iterator)
+    Algorithms::DeepTraversal.traverse(self, &iterator)
   end
 end
