@@ -11,7 +11,7 @@ module MetaStruct
     include SmartCore::Injection(::MetaStruct::DIContainer)
 
     # @since 0.1.0
-    import({ node_serializer: 'nodes.serializer' }, bind: :dynamic, access: :private)
+    import({ node_serializer: 'graph.nodes.serializer' }, bind: :dynamic, access: :private)
 
     # @param graph [MetaStruct::Graph]
     # @return [void]

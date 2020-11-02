@@ -12,6 +12,12 @@ class MetaStruct::Graph
   require_relative 'graph/algorithms'
   require_relative 'graph/serializer'
 
+  # @since 0.1.0
+  include SmartCore::Injection(::MetaStruct::DIContainer)
+
+  # @since 0.1.0
+  import({ graph_serializer: 'graph.serializer' }, bind: :dynamic, access: :private)
+
   class << self
     # @option nodes [Array<MetaStruct::Graph::Node>]
     # @option edges [Array<MetaStruct::Graph::Edge>]
@@ -71,5 +77,31 @@ class MetaStruct::Graph
   # @since 0.1.0
   def traverse(&iterator)
     Algorithms::GraphTraversal.traverse(self, &iterator)
+  end
+
+  # @return [Hash]
+  #
+  # @api public
+  # @since 0.1.0
+  def serialize
+    serializer.call
+  end
+
+  # @return [Json]
+  #
+  # @api public
+  # @since 0.1.0
+  def to_json
+    serializer.to_json
+  end
+
+  private
+
+  # @return [MetaStruct::Graph::Serializer]
+  #
+  # @api private
+  # @since 0.1.0
+  def serializer
+    graph_serializer.new(self)
   end
 end
