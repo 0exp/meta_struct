@@ -186,16 +186,24 @@ class MetaStruct::Graph
     # @since 0.1.0
     attr_reader :cycled_points
 
+    # @return [Array<MetaStruct::Graph::Point::Adjacency>]
+    #
+    # @api public
+    # @since 0.1.0
+    attr_reader :cycled_adjacencies
+
     # @param message [String]
     # @option graph [MetaStruct::Graph]
+    # @option cycled_adjacencies [Array<MetaStruct::Graph::Point::Adjacency>]
     # @option cycled_points [Array<MetaStruct:Graph::Point>]
     # @return [void]
     #
     # @api private
     # @since 0.1.0
-    def initialize(message, graph:, cycled_points:)
+    def initialize(message, graph:, cycled_adjacencies: [], cycled_points:)
       super(message)
       @graph = graph
+      @cycled_adjacencies = cycled_adjacencies
       @cycled_points = cycled_points
     end
   end

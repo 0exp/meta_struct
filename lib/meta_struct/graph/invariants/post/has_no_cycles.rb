@@ -21,9 +21,9 @@ module MetaStruct::Graph::Invariants::Post
       def validate!(graph)
         tracker = HasNoCycles::TraverseTracker.new
 
-        graph.deep_traverse do |point|
-          tracker.track!(point)
-          check_for_cycles!(graph, point, tracker)
+        graph.deep_traverse do |point, adjacency|
+          tracker.track!(point, adjacency)
+          check_for_cycles!(graph, tracker)
         end
       end
 
@@ -34,18 +34,21 @@ module MetaStruct::Graph::Invariants::Post
       #   2. Traversed more than one time.
       #
       # @param graph [MetaStruct::Graph]
-      # @param point [MetaStruct::Graph::Point]
       # @param tracker [MetaStruct::Graph::Invariants::Post::HasNoCycles::TraverseTracker]
       # @return [void]
       #
       # @api private
       # @since 0.1.0
-      def check_for_cycles!(graph, point, tracker)
-        tracker.each_pair do |tracked_point, traverse_count|
+      def check_for_cycles!(graph, tracker)
+        tracker.each_pair do |tracked_adjacency, tracked_point, traverse_count|
+          next unless traverse_count >= CYCLE_FACTOR
+          cycled_node = tracked_adjacency.left_point
           raise(MetaStruct::Graph::GraphHasCyclesInvariantError.new(
-            "Your graph has a cycle on a node with UUID '#{tracked_point.uuid}'",
-            graph: graph, cycled_points: [tracked_point]
-          )) if traverse_count >= CYCLE_FACTOR and tracked_point.adjacencies.any?
+            "Your graph has a cycle on a node with UUID: '#{cycled_node.uuid}'",
+            graph: graph,
+            cycled_adjacencies: [tracked_adjacency],
+            cycled_points: [cycled_node]
+          ))
         end
       end
     end

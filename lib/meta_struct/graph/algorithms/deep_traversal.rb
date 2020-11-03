@@ -19,6 +19,7 @@ module MetaStruct::Graph::Algorithms::DeepTraversal
     private
 
     # @param root_point [MetaStruct::Graph::Point]
+    # @param adjacency [MetaStruct::Graph::Adjacency, nil]
     # @param iterator [Block]
     # @yield [point]
     # @yieldparam point [MetaStruct::Graph::Point]
@@ -26,21 +27,23 @@ module MetaStruct::Graph::Algorithms::DeepTraversal
     #
     # @api private
     # @since 0.1.0
-    def deep_yield(root_point, &iterator)
-      yield_root(root_point, &iterator)
+    def deep_yield(root_point, adjacency = nil, &iterator)
+      yield_root(root_point, adjacency, &iterator)
       yield_tree(root_point, &iterator)
     end
 
     # @param root_point [MetaStruct::Graph::Point]
+    # @param adjacency [MetaStruct::Graph::Adjacency, nil]
     # @param iterator [Block]
-    # @yield [point]
+    # @yield [point, adjacency]
     # @yieldparam point [MetaStruct::Graph::Point]
+    # @yieldparam adjacency [MetaStruct::Graph::Adjacency, nil]
     # @return [void]
     #
     # @api private
     # @since 0.1.0
-    def yield_root(root_point, &iterator)
-      yield(root_point)
+    def yield_root(root_point, adjacency = nil, &iterator)
+      yield(root_point, adjacency)
     end
 
     # @param root_point [MetaStruct::Graph::Point]
@@ -53,7 +56,7 @@ module MetaStruct::Graph::Algorithms::DeepTraversal
     # @since 0.1.0
     def yield_tree(root_point, &iterator)
       root_point.adjacencies.each do |adjacency|
-        deep_yield(adjacency.right_point, &iterator)
+        deep_yield(adjacency.right_point, adjacency, &iterator)
       end
     end
   end

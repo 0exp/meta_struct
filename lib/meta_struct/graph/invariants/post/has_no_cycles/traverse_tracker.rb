@@ -8,20 +8,26 @@ class MetaStruct::Graph::Invariants::Post::HasNoCycles::TraverseTracker
   # @api private
   # @since 0.1.0
   def initialize
-    @tracks = Hash.new { |h, k| h[k] = 0 }
+    @tracks = Hash.new do |adjacency_hash, adjacency|
+      adjacency_hash[adjacency] = Hash.new do |point_hash, point|
+        point_hash[point] = 0
+      end
+    end
   end
 
   # @param point [MetaStruct::Graph::Point]
+  # @param adjacency [MetaStruct::Graph::Point::Adjacency, nil]
   # @return [Integer]
   #
   # @api private
   # @since 0.1.0
-  def track!(point)
-    tracks[point] += 1
+  def track!(point, adjacency)
+    tracks[adjacency][point] += 1
   end
 
   # @param block [Block]
-  # @yield [point, traverse_count]
+  # @yield [adjacency, point, traverse_count]
+  # @yieldparam adjacency [MetaStruct::Graph::Point::Adjacency, nil]
   # @yieldparam point [MetaStruct::Graph::Point]
   # @yieldparam traverse_count [Integer]
   # @return [void]
@@ -29,12 +35,16 @@ class MetaStruct::Graph::Invariants::Post::HasNoCycles::TraverseTracker
   # @api private
   # @since 0.1.0
   def each_pair(&block)
-    tracks.each_pair(&block)
+    tracks.each_pair do |adjacency, point_traverse_tracks|
+      point_traverse_tracks.each_pair do |point, traverse_count|
+        yield(adjacency, point, traverse_count)
+      end
+    end
   end
 
   private
 
-  # @return [Hash<MetaStruct::Graph::Point,Integer>]
+  # @return [Hash]
   #
   # @api private
   # @since 0.1.0
