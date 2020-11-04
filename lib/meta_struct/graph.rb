@@ -60,21 +60,23 @@ class MetaStruct::Graph
     Algorithms::FindNode.call!(self, node_uuid)
   end
 
+  # @param from [String, nil] UUID of the start (nil means "from the root")
   # @param iterator [Block]
   # @return [void]
   #
   # @api public
   # @since 0.1.0
-  def traverse(&iterator)
+  def traverse(from = nil, &iterator)
     Algorithms::DirectedTraversal.traverse(self, &iterator)
   end
 
+  # @param from [String, nil] UUID of the start (nil means "from the root")
   # @param iterator [Block]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def deep_traverse(&iterator)
+  def deep_traverse(from = nil, &iterator)
     Algorithms::DeepTraversal.traverse(self, &iterator)
   end
 end

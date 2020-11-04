@@ -22,9 +22,12 @@ module MetaStruct::Graph::Invariants::Post
         tracker = HasNoCycles::TraverseTracker.new
 
         graph.deep_traverse do |point, adjacency|
+          puts "(#{point.uuid}): #{adjacency&.left_point&.uuid}->#{adjacency&.right_point&.uuid}"
           tracker.track!(point, adjacency)
-          check_for_cycles!(graph, tracker)
+          # check_for_cycles!(graph, tracker)
         end
+
+        binding.pry
       end
 
       private
