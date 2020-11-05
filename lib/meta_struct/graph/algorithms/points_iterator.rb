@@ -104,7 +104,7 @@ module MetaStruct::Graph::Algorithms
     # @api private
     # @since 0.1.0
     def build_entity(point, adjacency = nil)
-      if adjacency.nil? && point != root
+      if adjacency == nil && point != root
         adjacency = find_adjacency_for(point)
       end
 

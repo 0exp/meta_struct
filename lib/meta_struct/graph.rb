@@ -91,7 +91,7 @@ class MetaStruct::Graph
   #
   # @api public
   # @since 0.1.0
-  def to_json
+  def to_json(*_args)
     serializer.to_json
   end
 
