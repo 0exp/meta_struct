@@ -43,17 +43,17 @@ RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
   specify { expect(iterator).to respond_to(:each) }
 
   describe '#collection' do
-    subject { iterator.collection.map(&:node) }
+    subject { iterator.collection.map(&:point).map(&:uuid) }
 
     context 'following regarding weight sorting' do
-      let(:expected_result) { [root, another_child_for_root] }
+      let(:expected_result) { [root.uuid, another_child_for_root.uuid] }
 
       it { is_expected.to match_array(expected_result) }
     end
 
     context 'when starting from specific node' do
       let(:node_uuid) { child_for_root.uuid }
-      let(:expected_result) { [child_for_root, child_for_child_for_root] }
+      let(:expected_result) { [child_for_root.uuid, child_for_child_for_root.uuid] }
 
       it { is_expected.to match_array(expected_result) }
     end
