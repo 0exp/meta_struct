@@ -47,12 +47,12 @@ module MetaStruct::Graph::Algorithms
     # @since 0.1.0
     def_delegators :graph, :root
 
-    # @return [Array<MetaStruct::Graph::Point>]
+    # @return [Array<MetaStruct::Graph::Point::Iterator::Entity>]
     #
     # @api private
     # @since 0.1.0
     def dfs(point)
-      flow = [point]
+      flow = [build_entity(point)]
       stack = [point]
 
       while stack.any?
@@ -62,7 +62,7 @@ module MetaStruct::Graph::Algorithms
         adjacencies.each do |adjacency|
           right_point = adjacency.right_point
 
-          flow.push(right_point)
+          flow.push(build_entity(right_point, adjacency))
 
           if right_point.adjacencies.any?
             stack.push(right_point)
@@ -95,6 +95,29 @@ module MetaStruct::Graph::Algorithms
       adjacencies.sort do |left, right|
         right.weight <=> left.weight
       end
+    end
+
+    # @param point [MetaStruct::Graph::Point]
+    # @param adjacency [MetaStruct::Graph::Point::Adjacency, nil]
+    # @return [MetaStruct::Graph::Point::Iterator::Entity]
+    #
+    # @api private
+    # @since 0.1.0
+    def build_entity(point, adjacency = nil)
+      if adjacency == nil && point != root
+        adjacency = find_adjacency_for(point)
+      end
+
+      MetaStruct::Graph::Point::Iterator::Entity.new(point, adjacency)
+    end
+
+    # @param point [MetaStruct::Graph::Point]
+    # @return [MetaStruct::Graph::Point::Adjacency, nil]
+    #
+    # @api private
+    # @since 0.1.0
+    def find_adjacency_for(point)
+      MetaStruct::Graph::Algorithms::FindAdjacency.call(graph, point)
     end
   end
 end

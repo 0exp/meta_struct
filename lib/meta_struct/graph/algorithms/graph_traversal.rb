@@ -14,8 +14,8 @@ module MetaStruct::Graph::Algorithms::GraphTraversal
     # @api public
     # @since 0.1.0
     def traverse(graph, uuid = nil, &iterator)
-      points_iterator(graph, uuid).each do |point|
-        break unless iterator.yield(point)
+      points_iterator(graph, uuid).each do |entity|
+        break unless iterator.yield(entity.point, entity.adjacency)
       end
     end
 
