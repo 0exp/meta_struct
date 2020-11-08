@@ -17,7 +17,8 @@ RSpec.describe MetaStruct::Graph do
   let!(:edge_5) { MetaStruct::Graph::Edge.create(left_node: node_3, right_node: node_5, weight: 0) }
   let!(:edge_6) { MetaStruct::Graph::Edge.create(left_node: node_5, right_node: node_6, weight: 0) }
   let!(:edge_7) { MetaStruct::Graph::Edge.create(left_node: node_6, right_node: node_7, weight: 0) }
-  let!(:edge_8) { MetaStruct::Graph::Edge.create(left_node: node_6, right_node: node_8, weight: 0) }
+  let!(:edge_8) { MetaStruct::Graph::Edge.create(left_node: node_6, right_node: node_8, weight: 1) }
+  let!(:edge_9) { MetaStruct::Graph::Edge.create(left_node: node_8, right_node: node_2, weight: 0) }
 
   let!(:graph) do
     MetaStruct::Graph.create(
