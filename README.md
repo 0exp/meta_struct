@@ -72,6 +72,14 @@ MetaStruct::Graph.create(
 
 ---
 
+## Roadmap
+
+- check node identity by it's internal state (attributes) in `MetaStract::Graph::Node` validation and `MetaStruct::Graph::Edge` validation steps (inside `Node`/`Edge`/`Graph` factories);
+- support for `MetaStruct::Graph` creation by nodes and node uuid pairs (without explicit edege objects);
+- support for `MetaStruct::Graph` creation from hash objects;
+
+---
+
 ## Contributing
 
 - Fork it ( https://github.com/0exp/meta_struct/fork )
