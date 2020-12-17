@@ -71,7 +71,7 @@ module MetaStruct::Graph::Factory
         ERROR_MESSAGE
       end
 
-      if has_duplicates?(edges)
+      if received_duplicates_edges?(edges)
         raise(
           MetaStruct::Graph::EdgeListDuplicateError,
           'You have duplicated edges (by identical nodes in left and right sides). ' \
@@ -133,7 +133,7 @@ module MetaStruct::Graph::Factory
     #
     # @api private
     # @since 0.1.0
-    def has_duplicates?(edges)
+    def received_duplicates_edges?(edges)
       uniq_edges = edges.uniq do |edge|
         [
           edge.left_node.uuid,
