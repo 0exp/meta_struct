@@ -76,12 +76,12 @@ RSpec.describe MetaStruct::Graph do
             original_edge = MetaStruct::Graph::Edge.create(
               left_node: left_node,
               right_node: right_node,
-              weight: 1 # weight should be ignored!
+              weight: 1
             )
             edge_duplicate = MetaStruct::Graph::Edge.create(
               left_node: left_node,
               right_node: right_node,
-              weight: 2 # weight should be ignored!
+              weight: 1
             )
 
             MetaStruct::Graph.create(

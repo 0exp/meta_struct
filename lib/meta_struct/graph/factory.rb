@@ -71,7 +71,7 @@ module MetaStruct::Graph::Factory
         ERROR_MESSAGE
       end
 
-      if edges.uniq { |edge| [edge.left_node.uuid, edge.right_node.uuid] }.size < edges.size
+      if validate_edges_on_duplicates(edges)
         raise(
           MetaStruct::Graph::EdgeListDuplicateError,
           'You have duplicated edges (by identical nodes in left and right sides). ' \
@@ -126,6 +126,25 @@ module MetaStruct::Graph::Factory
     # @since 0.1.0
     def validate_graph_postinvariants(graph)
       MetaStruct::Graph::Invariants::Post::All.validate!(graph)
+    end
+
+    # @param edges [Array<MetaStruct::Graph::Edge>]
+    # @return [Boolean]
+    #
+    # @api private
+    # @since 0.1.0
+    def validate_edges_on_duplicates(edges)
+      uniq_edges = edges.uniq do |edge|
+        [
+          edge.left_node.uuid,
+          edge.right_node.uuid,
+          edge.labels,
+          edge.properties,
+          edge.weight
+        ]
+      end
+
+      uniq_edges.size < edges.size
     end
   end
 end
