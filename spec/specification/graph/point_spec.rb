@@ -18,7 +18,7 @@ RSpec.describe MetaStruct::Graph::Point do
   describe '#labels' do
     subject { point.labels }
 
-    it { is_expected.to match_array(%w[cool labels]) }
+    it { is_expected.to eq(%w[cool labels]) }
   end
 
   describe '#properties' do

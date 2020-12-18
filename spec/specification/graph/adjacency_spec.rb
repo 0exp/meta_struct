@@ -3,8 +3,8 @@
 RSpec.describe MetaStruct::Graph::Point::Adjacency do
   let(:left_node) { MetaStruct::Graph::Node.create }
   let(:right_node) { MetaStruct::Graph::Node.create }
-  let(:left_point) { MetaStruct::Graph::Point.new(left_node) }
-  let(:right_point) { MetaStruct::Graph::Point.new(right_node) }
+  let(:left_point) { MetaStruct::Graph::Point.new(left_node, []) }
+  let(:right_point) { MetaStruct::Graph::Point.new(right_node, []) }
   let(:edge) do
     MetaStruct::Graph::Edge.create(
       left_node: left_node,
@@ -39,7 +39,7 @@ RSpec.describe MetaStruct::Graph::Point::Adjacency do
   describe '#edge_labels' do
     subject { adjacency.edge_labels }
 
-    it { is_expected.to match_array(%w[edge labels]) }
+    it { is_expected.to eq(%w[edge labels]) }
   end
 
   describe '#edge_properties' do
