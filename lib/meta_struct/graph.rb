@@ -76,8 +76,8 @@ class MetaStruct::Graph
   #
   # @api public
   # @since 0.1.0
-  def traverse(uuid = nil, &iterator)
-    Algorithms::GraphTraversal.traverse(self, uuid, &iterator)
+  def traverse(start_uuid = nil, &iterator)
+    Algorithms::GraphTraversal.traverse(self, start_uuid, &iterator)
   end
 
   # @return [Hash]

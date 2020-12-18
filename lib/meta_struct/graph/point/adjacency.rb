@@ -41,4 +41,36 @@ class MetaStruct::Graph::Point::Adjacency
   def weight
     edge.weight
   end
+
+  # @return [MetaStruct::Graph::Node]
+  #
+  # @api public
+  # @since 0.1.0
+  def left_node
+    edge.left_node
+  end
+
+  # @return [MetaStruct::Graph::Node]
+  #
+  # @api public
+  # @since 0.1.0
+  def right_node
+    edge.right_node
+  end
+
+  # @return [Array<String,Symbol>]
+  #
+  # @api public
+  # @since 0.1.0
+  def edge_labels
+    edge.labels
+  end
+
+  # @return [Hash<String|Symbol,Any>]
+  #
+  # @api public
+  # @since 0.1.0
+  def edge_properties
+    edge.properties
+  end
 end
