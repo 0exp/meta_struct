@@ -70,13 +70,14 @@ class MetaStruct::Graph
     Algorithms::FindPoint.call(self, node_uuid)
   end
 
+  # @param uuid [String]
   # @param iterator [Block]
   # @return [void]
   #
   # @api public
   # @since 0.1.0
-  def traverse(&iterator)
-    Algorithms::GraphTraversal.traverse(self, &iterator)
+  def traverse(uuid = nil, &iterator)
+    Algorithms::GraphTraversal.traverse(self, uuid, &iterator)
   end
 
   # @return [Hash]

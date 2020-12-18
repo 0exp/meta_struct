@@ -38,4 +38,20 @@ class MetaStruct::Graph::Point
   def uuid
     node.uuid
   end
+
+  # @return [Array<Strinng>]
+  #
+  # @api public
+  # @since 0.1.0
+  def labels
+    node.labels
+  end
+
+  # @return [Hash<String,Any>]
+  #
+  # @api public
+  # @since 0.1.0
+  def properties
+    node.properties
+  end
 end
