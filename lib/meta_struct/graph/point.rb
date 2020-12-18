@@ -26,7 +26,7 @@ class MetaStruct::Graph::Point
   #
   # @api private
   # @since 0.1.0
-  def initialize(node, adjacencies = [])
+  def initialize(node, adjacencies)
     @node = node
     @adjacencies = adjacencies
   end

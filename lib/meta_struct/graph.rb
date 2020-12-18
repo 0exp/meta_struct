@@ -70,7 +70,7 @@ class MetaStruct::Graph
     Algorithms::FindPoint.call(self, node_uuid)
   end
 
-  # @param uuid [String]
+  # @param start_uuid [String]
   # @param iterator [Block]
   # @return [void]
   #
