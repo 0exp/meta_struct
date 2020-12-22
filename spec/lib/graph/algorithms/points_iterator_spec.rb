@@ -78,7 +78,7 @@ RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
             {
               uuid: child_for_child_for_root.uuid,
               edge: edge_for_child_for_child_for_root
-            },
+            }
           ]
         end
 
