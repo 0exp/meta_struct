@@ -73,4 +73,12 @@ class MetaStruct::Graph::Point::Adjacency
   def edge_properties
     edge.properties
   end
+
+  # @return [Boolean]
+  #
+  # @api public
+  # @since 0.1.0
+  def end?
+    right_point == nil
+  end
 end
