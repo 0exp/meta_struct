@@ -47,4 +47,16 @@ RSpec.describe MetaStruct::Graph::Point::Adjacency do
 
     it { is_expected.to eq({ 'edge' => 'property' }) }
   end
+
+  describe '#end?' do
+    subject { adjacency.end? }
+
+    it { is_expected.to be_falsey }
+
+    context 'when right point is nil' do
+      let(:right_point) { nil }
+
+      it { is_expected.to be_truthy }
+    end
+  end
 end
