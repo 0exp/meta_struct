@@ -2,122 +2,52 @@
 
 # @api private
 # @since 0.1.0
-module MetaStruct::Graph::Algorithms
-  class PointsIterator
-    extend Forwardable
+module MetaStruct::Graph::Algorithms::PointsIterator
+  class << self
+    def call(graph, from_uuid: nil, &iterator)
+      start_point = find_start_point(graph, from_uuid)
+      adjacency = MetaStruct::Graph::Algorithms::FindAdjacency
+        .call(graph, start_point)
 
-    include Enumerable
-
-    # @param graph [MetaStruct::Graph]
-    # @param node_uuid [String]
-    # @return [void]
-    #
-    # @api private
-    # @since 0.1.0
-    def initialize(graph, uuid = nil)
-      @graph = graph
-      @uuid = uuid
-    end
-
-    # @api private
-    # @since 0.1.0
-    def each(&block)
-      collection.each(&block)
-    end
-
-    # @return [Array<MetaStruct::Graph::Point>]
-    #
-    # @api private
-    # @since 0.1.0
-    def collection
-      dfs(start_point)
+      deep_iterate(start_point, adjacency, &iterator)
     end
 
     private
 
-    # @api private
-    # @since 0.1.0
-    attr_reader :graph
+    def find_start_point(graph, from_uuid)
+      return graph.root unless from_uuid && !from_uuid.empty?
 
-    # @api private
-    # @since 0.1.0
-    attr_reader :uuid
+      graph.find_point(from_uuid)
+    end
 
-    # @api private
-    # @since 0.1.0
-    def_delegators :graph, :root
+    def deep_iterate(point, adjacency = nil, &iterator)
+      iterate_point(point, adjacency, &iterator)
 
-    # @return [Array<MetaStruct::Graph::Point::Iterator::Entity>]
-    #
-    # @api private
-    # @since 0.1.0
-    def dfs(point)
-      flow = [build_entity(point)]
-      stack = [point]
+      iterate_point_adjacencies(point, &iterator)
+    end
 
-      while stack.any?
-        current = stack.pop
-        adjacencies = sorted_adjacencies(current.adjacencies)
+    def iterate_point(point, adjacency, &iterator)
+      yield(point, adjacency)
+    end
 
-        adjacencies.each do |adjacency|
-          right_point = adjacency.right_point
+    def iterate_point_adjacencies(point, &iterator)
+      adjacencies = sorted_adjacencies(point.adjacencies)
 
-          flow.push(build_entity(right_point, adjacency))
+      adjacencies.each do |adjacency|
+        next_point = adjacency.right_point
+        result = iterate_point(next_point, adjacency, &iterator)
 
-          if right_point.adjacencies.any?
-            stack.push(right_point)
-          else
-            stack = []
-            break
-          end
-        end
+        break if result && !next_point.adjacencies?
+        next unless result
+
+        iterate_point_adjacencies(next_point, &iterator)
       end
-
-      flow
     end
 
-    # @return [MetaStruct::Graph::Point]
-    #
-    # @api private
-    # @since 0.1.0
-    def start_point
-      return root unless uuid && !uuid.empty?
-
-      graph.find_point(uuid)
-    end
-
-    # @param adjacencies [Array<MetaStruct::Graph::Point::Adjacency>]
-    # @return [Array<MetaStruct::Graph::Point::Adjacency>]
-    #
-    # @api private
-    # @since 0.1.0
     def sorted_adjacencies(adjacencies = [])
       adjacencies.sort do |left, right|
         right.weight <=> left.weight
       end
-    end
-
-    # @param point [MetaStruct::Graph::Point]
-    # @param adjacency [MetaStruct::Graph::Point::Adjacency, nil]
-    # @return [MetaStruct::Graph::Point::Iterator::Entity]
-    #
-    # @api private
-    # @since 0.1.0
-    def build_entity(point, adjacency = nil)
-      if adjacency == nil && point != root
-        adjacency = find_adjacency_for(point)
-      end
-
-      MetaStruct::Graph::Point::Iterator::Entity.new(point, adjacency)
-    end
-
-    # @param point [MetaStruct::Graph::Point]
-    # @return [MetaStruct::Graph::Point::Adjacency, nil]
-    #
-    # @api private
-    # @since 0.1.0
-    def find_adjacency_for(point)
-      MetaStruct::Graph::Algorithms::FindAdjacency.call(graph, point)
     end
   end
 end

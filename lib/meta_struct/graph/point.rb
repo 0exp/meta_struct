@@ -26,7 +26,7 @@ class MetaStruct::Graph::Point
   #
   # @api private
   # @since 0.1.0
-  def initialize(node, adjacencies)
+  def initialize(node, adjacencies = [])
     @node = node
     @adjacencies = adjacencies
   end
@@ -53,5 +53,13 @@ class MetaStruct::Graph::Point
   # @since 0.1.0
   def properties
     node.properties
+  end
+
+  # @return [Boolean]
+  #
+  # @api public
+  # @since 0.1.0
+  def adjacencies?
+    adjacencies.any?
   end
 end
