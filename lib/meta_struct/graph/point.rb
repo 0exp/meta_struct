@@ -6,7 +6,6 @@ class MetaStruct::Graph::Point
   require_relative 'point/adjacency'
   require_relative 'point/factory'
   require_relative 'point/tree_factory'
-  require_relative 'point/iterator'
 
   # @return [MetaStruct::Graph::Node]
   #

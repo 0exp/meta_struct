@@ -4,6 +4,13 @@
 # @since 0.1.0
 module MetaStruct::Graph::Algorithms::PointsIterator
   class << self
+    # @param graph [MetaStruct::Graph]
+    # @option from_uuid [String, nil]
+    # @param iterator [Block]
+    # @return [void]
+    #
+    # @api private
+    # @since 0.1.0
     def call(graph, from_uuid: nil, &iterator)
       start_point = find_start_point(graph, from_uuid)
       adjacency = MetaStruct::Graph::Algorithms::FindAdjacency
@@ -14,22 +21,48 @@ module MetaStruct::Graph::Algorithms::PointsIterator
 
     private
 
+    # @param graph [MetaStruct::Graph]
+    # @param from_uuid [String, nil]
+    # @return [MetaStruct::Graph::Point]
+    #
+    # @api private
+    # @since 0.1.0
     def find_start_point(graph, from_uuid)
       return graph.root unless from_uuid && !from_uuid.empty?
 
       graph.find_point(from_uuid)
     end
 
+    # @param point [MetaStruct::Graph::Point]
+    # @param adjacency [MetaStruct::Graph::Point::Adjacency]
+    # @param iterator [Block]
+    # @return [void]
+    #
+    # @api private
+    # @since 0.1.0
     def deep_iterate(point, adjacency = nil, &iterator)
       iterate_point(point, adjacency, &iterator)
 
       iterate_point_adjacencies(point, &iterator)
     end
 
+    # @param point [MetaStruct::Graph::Point]
+    # @param adjacency [MetaStruct::Graph::Point::Adjacency]
+    # @param iterator [Block]
+    # @return [Boolean]
+    #
+    # @api private
+    # @since 0.1.0
     def iterate_point(point, adjacency, &iterator)
       yield(point, adjacency)
     end
 
+    # @param point [MetaStruct::Graph::Point]
+    # @param iterator [Block]
+    # @return [void]
+    #
+    # @api private
+    # @since 0.1.0
     def iterate_point_adjacencies(point, &iterator)
       adjacencies = sorted_adjacencies(point.adjacencies)
 
@@ -44,6 +77,11 @@ module MetaStruct::Graph::Algorithms::PointsIterator
       end
     end
 
+    # @param adjacencies [Array<MetaStruct::Graph::Point::Adjacency>]
+    # @return [Array<MetaStruct::Graph::Point::Adjacency>]
+    #
+    # @api private
+    # @since 0.1.0
     def sorted_adjacencies(adjacencies = [])
       adjacencies.sort do |left, right|
         right.weight <=> left.weight
