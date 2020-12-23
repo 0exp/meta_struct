@@ -1,13 +1,20 @@
 # frozen_string_literal: true
 
 RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
-  let(:iterator) { described_class.new(graph, node_uuid) }
-
   let(:root) { MetaStruct::Graph::Node.create(labels: ['root']) }
   let(:child_for_root) { MetaStruct::Graph::Node.create(labels: ['first level weight 1']) }
   let(:another_child_for_root) { MetaStruct::Graph::Node.create(labels: ['first level weight 2']) }
   let(:child_for_child_for_root) do
     MetaStruct::Graph::Node.create(labels: ['second level weight -1'])
+  end
+  let(:child_2_for_child_for_root) do
+    MetaStruct::Graph::Node.create(labels: ['second level child 2'])
+  end
+  let(:child_3_for_child_for_root) do
+    MetaStruct::Graph::Node.create(labels: ['second level child 3'])
+  end
+  let(:child_for_child_3_for_child_for_root) do
+    MetaStruct::Graph::Node.create(labels: ['third level child 1'])
   end
 
   let(:edge_for_root) do
@@ -31,31 +38,176 @@ RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
       weight: -1
     )
   end
+  let(:edge_2_for_child_for_child_for_root) do
+    MetaStruct::Graph::Edge.create(
+      left_node: child_for_root,
+      right_node: child_2_for_child_for_root,
+      weight: 2
+    )
+  end
+  let(:edge_3_for_child_for_child_for_root) do
+    MetaStruct::Graph::Edge.create(
+      left_node: child_for_root,
+      right_node: child_3_for_child_for_root,
+      weight: 1
+    )
+  end
+  let(:edge_third_level_for_child_for_child_for_root) do
+    MetaStruct::Graph::Edge.create(
+      left_node: child_3_for_child_for_root,
+      right_node: child_for_child_3_for_child_for_root,
+      weight: 1
+    )
+  end
 
-  let(:nodes) { [child_for_root, root, another_child_for_root, child_for_child_for_root] }
-  let(:edges) { [edge_for_root, another_edge_for_root, edge_for_child_for_child_for_root] }
+  let(:nodes) do
+    [
+      child_for_root,
+      root,
+      another_child_for_root,
+      child_for_child_for_root,
+      child_2_for_child_for_root,
+      child_3_for_child_for_root,
+      child_for_child_3_for_child_for_root
+    ]
+  end
+  let(:edges) do
+    [
+      edge_for_root,
+      another_edge_for_root,
+      edge_for_child_for_child_for_root,
+      edge_2_for_child_for_child_for_root,
+      edge_3_for_child_for_child_for_root,
+      edge_third_level_for_child_for_child_for_root
+    ]
+  end
 
-  let(:tree) { MetaStruct::Graph::Point::TreeFactory.create(nodes, edges) }
-  let(:graph) { MetaStruct::Graph.new(tree, nodes, edges) }
+  let(:graph) { MetaStruct::Graph.create(nodes: nodes, edges: edges) }
 
   let(:node_uuid) { '' }
+  let(:flow) { [] }
+  let(:iterator) do
+    lambda do |point, adjacency|
+      flow << { uuid: point.uuid, edge: adjacency&.edge }
+      true
+    end
+  end
 
-  specify { expect(iterator).to respond_to(:each) }
+  describe '.call' do
+    subject do
+      described_class.call(graph, from_uuid: node_uuid) do |point, adjacency|
+        iterator.call(point, adjacency)
+      end
 
-  describe '#collection' do
-    subject { iterator.collection.map(&:point).map(&:uuid) }
+      flow
+    end
 
     context 'following regarding weight sorting' do
-      let(:expected_result) { [root.uuid, another_child_for_root.uuid] }
+      let(:expected_result) do
+        [
+          { uuid: root.uuid, edge: nil },
+          { uuid: another_child_for_root.uuid, edge: another_edge_for_root }
+        ]
+      end
 
-      it { is_expected.to match_array(expected_result) }
+      it { is_expected.to match(expected_result) }
+
+      context 'when iterator for specific point has not been succeed' do
+        let(:iterator) do
+          lambda do |point, adjacency|
+            flow << { uuid: point.uuid, edge: adjacency&.edge }
+            point.uuid != another_child_for_root.uuid
+          end
+        end
+        let(:expected_result) do
+          [
+            { uuid: root.uuid, edge: nil },
+            { uuid: another_child_for_root.uuid, edge: another_edge_for_root },
+            { uuid: child_for_root.uuid, edge: edge_for_root },
+            {
+              uuid: child_2_for_child_for_root.uuid,
+              edge: edge_2_for_child_for_child_for_root
+            }
+          ]
+        end
+
+        it { is_expected.to match(expected_result) }
+
+        context 'when iterator always return false' do
+          let(:iterator) do
+            lambda do |point, adjacency|
+              flow << { uuid: point.uuid, edge: adjacency&.edge }
+              false
+            end
+          end
+          let(:expected_result) do
+            [
+              { uuid: root.uuid, edge: nil },
+              { uuid: another_child_for_root.uuid, edge: another_edge_for_root },
+              { uuid: child_for_root.uuid, edge: edge_for_root }
+            ]
+          end
+
+          it { is_expected.to match(expected_result) }
+        end
+
+        context 'when iteration by bound nodes returns false' do
+          let(:bound_node_uuids) do
+            [
+              child_for_child_3_for_child_for_root.uuid,
+              child_2_for_child_for_root.uuid,
+              child_for_child_for_root.uuid,
+              another_child_for_root.uuid
+            ]
+          end
+          let(:iterator) do
+            lambda do |point, adjacency|
+              flow << { uuid: point.uuid, edge: adjacency&.edge }
+              !bound_node_uuids.include?(point.uuid)
+            end
+          end
+          let(:expected_result) do
+            [
+              { uuid: root.uuid, edge: nil },
+              { uuid: another_child_for_root.uuid, edge: another_edge_for_root },
+              { uuid: child_for_root.uuid, edge: edge_for_root },
+              {
+                uuid: child_2_for_child_for_root.uuid,
+                edge: edge_2_for_child_for_child_for_root
+              },
+              {
+                uuid: child_3_for_child_for_root.uuid,
+                edge: edge_3_for_child_for_child_for_root
+              },
+              {
+                uuid: child_for_child_3_for_child_for_root.uuid,
+                edge: edge_third_level_for_child_for_child_for_root
+              },
+              {
+                uuid: child_for_child_for_root.uuid,
+                edge: edge_for_child_for_child_for_root
+              }
+            ]
+          end
+
+          it { is_expected.to match(expected_result) }
+        end
+      end
     end
 
     context 'when starting from specific node' do
       let(:node_uuid) { child_for_root.uuid }
-      let(:expected_result) { [child_for_root.uuid, child_for_child_for_root.uuid] }
+      let(:expected_result) do
+        [
+          { uuid: child_for_root.uuid, edge: edge_for_root },
+          {
+            uuid: child_2_for_child_for_root.uuid,
+            edge: edge_2_for_child_for_child_for_root
+          }
+        ]
+      end
 
-      it { is_expected.to match_array(expected_result) }
+      it { is_expected.to match(expected_result) }
     end
   end
 end
