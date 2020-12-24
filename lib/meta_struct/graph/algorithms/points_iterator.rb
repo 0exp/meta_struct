@@ -41,9 +41,9 @@ module MetaStruct::Graph::Algorithms::PointsIterator
     # @api private
     # @since 0.1.0
     def deep_iterate(point, adjacency = nil, &iterator)
-      iterate_point(point, adjacency, &iterator)
+      result = iterate_point(point, adjacency, &iterator)
 
-      iterate_point_adjacencies(point, &iterator)
+      iterate_point_adjacencies(point, &iterator) if result
     end
 
     # @param point [MetaStruct::Graph::Point]

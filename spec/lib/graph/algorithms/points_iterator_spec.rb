@@ -140,13 +140,7 @@ RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
               false
             end
           end
-          let(:expected_result) do
-            [
-              { uuid: root.uuid, edge: nil },
-              { uuid: another_child_for_root.uuid, edge: another_edge_for_root },
-              { uuid: child_for_root.uuid, edge: edge_for_root }
-            ]
-          end
+          let(:expected_result) { [{ uuid: root.uuid, edge: nil }] }
 
           it { is_expected.to match(expected_result) }
         end
