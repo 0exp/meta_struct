@@ -14,7 +14,7 @@ module MetaStruct::Graph::Invariants::Post::HasNoCycles
       cycled_nodes = []
       visited = [root]
 
-      scan(cycled_nodes, visited, root, true)
+      scan(cycled_nodes, visited, root)
 
       if cycled_nodes.any?
         raise(
@@ -26,9 +26,11 @@ module MetaStruct::Graph::Invariants::Post::HasNoCycles
 
     private
 
-    def scan(cycled_nodes, visited, point, reset_visited = false)
+    def scan(cycled_nodes, visited, point)
       point.adjacencies.each do |adjacency|
+        left_point = adjacency.left_point
         right_point = adjacency.right_point
+        visited = clean_visited_for(left_point, visited)
 
         if visited.include?(right_point)
           cycled_nodes.push(right_point.node)
@@ -38,7 +40,17 @@ module MetaStruct::Graph::Invariants::Post::HasNoCycles
         visited.push(right_point)
 
         scan(cycled_nodes, visited, right_point)
-        visited = [point] if reset_visited
+      end
+    end
+
+    def clean_visited_for(left_point, visited)
+      return visited if visited.last.uuid == left_point.uuid
+
+      [].tap do |visited_till_left_point|
+        visited.each do |point|
+          visited_till_left_point.push(point)
+          break if point.uuid == left_point.uuid
+        end
       end
     end
   end
