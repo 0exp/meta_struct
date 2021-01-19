@@ -76,4 +76,29 @@ RSpec.describe MetaStruct::Graph::Invariants::Post::HasNoCycles do
 
     it { is_expected.to raise_error(MetaStruct::Graph::GraphCycledEror, expected_message) }
   end
+
+  context 'when graph has edges with the same left and right nodes' do
+    let(:one_more_edge_for_root) do
+      MetaStruct::Graph::Edge.create(
+        left_node: root,
+        right_node: child_for_root
+      )
+    end
+    let(:edges) { super().push(one_more_edge_for_root) }
+
+    it { is_expected.not_to raise_error }
+
+    context 'when edges with the same left and right nodes in the middle of graph' do
+      let(:one_more_edge_for_child_for_child_for_root) do
+        MetaStruct::Graph::Edge.create(
+          left_node: child_for_root,
+          right_node: child_for_child_for_root
+        )
+      end
+
+      let(:edges) { super().push(one_more_edge_for_child_for_child_for_root) }
+
+      it { is_expected.not_to raise_error }
+    end
+  end
 end
