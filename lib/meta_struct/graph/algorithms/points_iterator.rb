@@ -83,9 +83,7 @@ module MetaStruct::Graph::Algorithms::PointsIterator
     # @api private
     # @since 0.1.0
     def sorted_adjacencies(adjacencies = [])
-      adjacencies.sort do |left, right|
-        right.weight <=> left.weight
-      end
+      adjacencies.sort_by(&:weight)
     end
   end
 end

@@ -2,54 +2,54 @@
 
 RSpec.describe MetaStruct::Graph::Algorithms::PointsIterator do
   let(:root) { MetaStruct::Graph::Node.create(labels: ['root']) }
-  let(:child_for_root) { MetaStruct::Graph::Node.create(labels: ['first level weight 1']) }
-  let(:another_child_for_root) { MetaStruct::Graph::Node.create(labels: ['first level weight 2']) }
+  let(:child_for_root) { MetaStruct::Graph::Node.create(labels: ['first level weight 2']) }
+  let(:another_child_for_root) { MetaStruct::Graph::Node.create(labels: ['first level weight 1']) }
   let(:child_for_child_for_root) do
-    MetaStruct::Graph::Node.create(labels: ['second level weight -1'])
+    MetaStruct::Graph::Node.create(labels: ['second level weight 2'])
   end
   let(:child_2_for_child_for_root) do
-    MetaStruct::Graph::Node.create(labels: ['second level child 2'])
+    MetaStruct::Graph::Node.create(labels: ['second level child 2 wight -1'])
   end
   let(:child_3_for_child_for_root) do
-    MetaStruct::Graph::Node.create(labels: ['second level child 3'])
+    MetaStruct::Graph::Node.create(labels: ['second level child 3 weight 0'])
   end
   let(:child_for_child_3_for_child_for_root) do
-    MetaStruct::Graph::Node.create(labels: ['third level child 1'])
+    MetaStruct::Graph::Node.create(labels: ['third level child 1 weight 1'])
   end
 
   let(:edge_for_root) do
     MetaStruct::Graph::Edge.create(
       left_node: root,
       right_node: child_for_root,
-      weight: 1
+      weight: 2
     )
   end
   let(:another_edge_for_root) do
     MetaStruct::Graph::Edge.create(
       left_node: root,
       right_node: another_child_for_root,
-      weight: 2
+      weight: 1
     )
   end
   let(:edge_for_child_for_child_for_root) do
     MetaStruct::Graph::Edge.create(
       left_node: child_for_root,
       right_node: child_for_child_for_root,
-      weight: -1
+      weight: 2
     )
   end
   let(:edge_2_for_child_for_child_for_root) do
     MetaStruct::Graph::Edge.create(
       left_node: child_for_root,
       right_node: child_2_for_child_for_root,
-      weight: 2
+      weight: -1
     )
   end
   let(:edge_3_for_child_for_child_for_root) do
     MetaStruct::Graph::Edge.create(
       left_node: child_for_root,
       right_node: child_3_for_child_for_root,
-      weight: 1
+      weight: 0
     )
   end
   let(:edge_third_level_for_child_for_child_for_root) do
