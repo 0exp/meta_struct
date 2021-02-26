@@ -4,6 +4,16 @@
 # @since 0.1.0
 module MetaStruct::Graph::Point::TreeFactory
   class << self
+    # @since 0.1.0
+    include SmartCore::Injection(::MetaStruct::DIContainer)
+
+    # @since 0.1.0
+    import(
+      { find_root_nodes: 'graph.algorithms.find_root_nodes' },
+      bind: :dynamic,
+      access: :private
+    )
+
     # @param nodes [Array<MetaStruct::Graph::Node>]
     # @param edges [Array<MetaStruct::Graph::Edge>]
     # @return [MetaStruct::Graph::Point]
@@ -12,7 +22,7 @@ module MetaStruct::Graph::Point::TreeFactory
     # @since 0.1.0
     def create(nodes, edges)
       wrrapped_points = wrap_to_points(nodes)
-      root_node = MetaStruct::Graph::Algorithms::FindRootNodes.call(nodes, edges).first
+      root_node = find_root_nodes.call(nodes, edges).first
 
       wrrapped_points.each do |point|
         right_edges = edges.select { |edge| edge.left_node.uuid == point.node.uuid }
