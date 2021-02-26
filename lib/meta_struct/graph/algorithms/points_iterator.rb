@@ -4,6 +4,16 @@
 # @since 0.1.0
 module MetaStruct::Graph::Algorithms::PointsIterator
   class << self
+    # @since 0.1.0
+    include SmartCore::Injection(::MetaStruct::DIContainer)
+
+    # @since 0.1.0
+    import(
+      { find_adjacency: 'graph.algorithms.find_adjacency' },
+      bind: :dynamic,
+      access: :private
+    )
+
     # @param graph [MetaStruct::Graph]
     # @option from_uuid [String, nil]
     # @param iterator [Block]
@@ -13,8 +23,7 @@ module MetaStruct::Graph::Algorithms::PointsIterator
     # @since 0.1.0
     def call(graph, from_uuid: nil, &iterator)
       start_point = find_start_point(graph, from_uuid)
-      adjacency = MetaStruct::Graph::Algorithms::FindAdjacency
-        .call(graph, start_point)
+      adjacency = find_adjacency.call(graph, start_point)
 
       deep_iterate(start_point, adjacency, &iterator)
     end

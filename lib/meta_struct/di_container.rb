@@ -13,5 +13,13 @@ MetaStruct::DIContainer = SmartCore::Container.define do
     namespace(:edges) do
       register(:serializer) { MetaStruct::Graph::Edge::Serializer }
     end
+
+    namespace(:algorithms) do
+      register(:points_iterator) { MetaStruct::Graph::Algorithms::PointsIterator }
+      register(:find_adjacency) { MetaStruct::Graph::Algorithms::FindAdjacency }
+      register(:find_root_nodes) { MetaStruct::Graph::Algorithms::FindRootNodes }
+      register(:find_point) { MetaStruct::Graph::Algorithms::FindPoint }
+      register(:graph_traversal) { MetaStruct::Graph::Algorithms::GraphTraversal }
+    end
   end
 end

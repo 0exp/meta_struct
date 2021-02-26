@@ -4,6 +4,16 @@
 # @since 0.1.0
 module MetaStruct::Graph::Invariants::Pre::HasOnlyOneRoot
   class << self
+    # @since 0.1.0
+    include SmartCore::Injection(::MetaStruct::DIContainer)
+
+    # @since 0.1.0
+    import(
+      { find_root_nodes: 'graph.algorithms.find_root_nodes' },
+      bind: :dynamic,
+      access: :private
+    )
+
     # @param nodes [Array<MetaStruct::Graph::Node>]
     # @param edges [Array<MetaStruct::Graph::Edge>]
     # @return [void]
@@ -11,7 +21,7 @@ module MetaStruct::Graph::Invariants::Pre::HasOnlyOneRoot
     # @api private
     # @since 0.1.0
     def validate!(nodes, edges)
-      root_nodes = MetaStruct::Graph::Algorithms::FindRootNodes.call(nodes, edges)
+      root_nodes = find_root_nodes.call(nodes, edges)
 
       case
       when root_nodes.size == 0

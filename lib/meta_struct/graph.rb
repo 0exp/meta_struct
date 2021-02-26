@@ -17,6 +17,18 @@ class MetaStruct::Graph
 
   # @since 0.1.0
   import({ graph_serializer: 'graph.serializer' }, bind: :dynamic, access: :private)
+  # @since 0.1.0
+  import(
+    { find_graph_point: 'graph.algorithms.find_point' },
+    bind: :dynamic,
+    access: :private
+  )
+  # @since 0.1.0
+  import(
+    { graph_traversal: 'graph.algorithms.graph_traversal' },
+    bind: :dynamic,
+    access: :private
+  )
 
   class << self
     # @option nodes [Array<MetaStruct::Graph::Node>]
@@ -67,7 +79,7 @@ class MetaStruct::Graph
   # @api public
   # @since 0.1.0
   def find_point(node_uuid)
-    Algorithms::FindPoint.call(self, node_uuid)
+    find_graph_point.call(self, node_uuid)
   end
 
   # @option from_uuid [String]
@@ -77,7 +89,7 @@ class MetaStruct::Graph
   # @api public
   # @since 0.1.0
   def traverse(from_uuid: nil, &iterator)
-    Algorithms::GraphTraversal.traverse(self, from_uuid, &iterator)
+    graph_traversal.traverse(self, from_uuid, &iterator)
   end
 
   # @return [Hash]
