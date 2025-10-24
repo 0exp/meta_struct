@@ -3,7 +3,7 @@
 require_relative 'lib/meta_struct/version'
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.7')
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.0')
 
   spec.name    = 'meta_struct'
   spec.version = MetaStruct::VERSION
